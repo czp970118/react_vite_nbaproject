@@ -1,0 +1,17 @@
+.team-list-wrap {
+	// background-color: pink;
+	display: flex;
+	flex-direction: column;
+
+	.team-list-filter {
+		margin-bottom: 12px;
+		display: flex;
+		justify-content: space-between;
+	}
+}
+
+.team-logo {
+	width: 100px;
+	object-fit: contain;
+	border-radius: 8px;
+}

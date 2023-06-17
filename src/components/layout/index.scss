@@ -1,0 +1,19 @@
+#sider {
+	background-color: #fff;
+}
+
+.conten-logo {
+	width: 100%;
+	height: 100px;
+}
+
+.conten-logo>img {
+	width: 80%;
+	height: auto;
+}
+.header{
+	display: flex;
+	justify-content: space-between;
+	padding-right: 48px !important;
+	align-items: center;
+}

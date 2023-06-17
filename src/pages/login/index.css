@@ -1,0 +1,38 @@
+.login-wrap {
+	height: 100vh;
+	width: 100vw;
+	background-color: #21509f;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.login-logo {
+	margin-top: 80px;
+}
+
+.logo {
+	height: auto;
+}
+.login-form{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-top: 20px;
+}
+.rember-pass{
+	align-self: flex-start;
+	margin-bottom: 12px;
+	margin-left: 44px;
+	color: #fff;
+}
+.form-item{
+	margin-bottom: 12px;
+}
+.form-text{
+	color: #fff;
+	margin-right: 6px;
+}
+.ant-form-item-required{
+	color: #fff !important;
+}
