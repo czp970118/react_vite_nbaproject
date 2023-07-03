@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react'
 import ReactDOM from 'react-dom/client'
-import { HashRouter as Router, Routes, Route, redirect, useNavigate } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import { ConfigProvider } from 'antd';
 import App from './App.tsx'
 import Login from './pages/login';

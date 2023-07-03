@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Route, Routes } from 'react-router-dom';
+import { useStore } from './hooks';
 import UserRedirect from './components/use-redirect';
 import BaseLayout from './components/layout';
 import TeamInfo from './pages/team-info';
@@ -11,14 +12,14 @@ import TeamList from './pages/team-list';
 import './App.css'
 
 function App() {
+  const { userInfo } = useStore();
+  console.log(userInfo)
   return (
     <UserRedirect>
       <div className='contenter'>
         <BaseLayout>
           <Routes>
-            <Route path='team/info' element={<TeamInfo onCountChange={(count: number) => {
-              console.log('我在父组件,当前的count是', count)
-            }} />} />
+            <Route path='team/info' element={<TeamInfo />} />
             <Route path='team/cards' element={<TeamCards />} />
             <Route path='team/list' element={<TeamList />} />
             <Route path='player/cards' element={<PlayerCards />} />
@@ -28,7 +29,6 @@ function App() {
         </BaseLayout>
       </div>
     </UserRedirect>
-
   )
 }
 

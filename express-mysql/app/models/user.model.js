@@ -34,16 +34,15 @@ User.register = async ({ userName, userPassword }, result) => {
 	}
 }
 
-User.getUserInfo = async (userName, { result, err }) => {
+User.getUserInfo = async (userName, result) => {
 	try {
 		sql.query('select * from user where userName=?', [userName], (error, res) => {
-			console.log('res====>', res);
-			console.log('error====>', error);
-			if (error) err(error);
+			if (error) result(error, { success: false });
 			if (res.length) {
-				result({ code: 0, mes: '', res })
+				console.log('res===>', res)
+				result(res[0], null)
 			} else {
-				result({ code: 1, mes: '没有此用户信息!' })
+				result({ code: 1, mes: '没有此用户信息!' }, null)
 			}
 		})
 

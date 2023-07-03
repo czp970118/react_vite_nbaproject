@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Table, Form, Select, Button } from 'antd';
+import { Table, Form, Select, Button, Input } from 'antd';
 import { useAntdTable } from 'ahooks'
 import { parttitionData } from '../../constan';
 import { ParttitionEnum } from '../../enum';
@@ -70,9 +70,14 @@ function TeamList() {
 	return (
 		<Form className="team-list-wrap" colon>
 			<div className="team-list-filter">
-				<FormItem label='分区' name='partition'>
-					<Select style={{ width: 200 }} options={parttitionData} />
-				</FormItem>
+				<div className="filter-item">
+					<FormItem label='分区' name='partition' style={{ marginRight: 12 }}>
+						<Select style={{ width: 200 }} options={parttitionData} placeholder="All" allowClear />
+					</FormItem>
+					<FormItem label='球队名称' name='teamName'>
+						<Input placeholder="请输入球队名称" style={{ width: 200 }} />
+					</FormItem>
+				</div>
 				<FormItem>
 					<Button type="primary" style={{ marginRight: 12 }}>Search</Button>
 					<Button >Reset</Button>

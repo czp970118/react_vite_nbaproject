@@ -31,13 +31,13 @@ exports.register = (req, res) => {
 }
 
 exports.getUserInfo = (req, res) => {
-	console.log('进来userInfo了吗?')
 	const { userName } = req.query;
 	User.getUserInfo(userName, (result, error) => {
 		if (error) {
 			res.status(404).send({})
 		} else {
-			res.send(result);
+			const { userName, avatar, id } = result;
+			res.send({ success: true, message: '', user: { userName, userId: id, avatar } });
 		}
 	})
 }
