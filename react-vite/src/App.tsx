@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import { useStore } from './hooks';
 import UserRedirect from './components/use-redirect';
 import BaseLayout from './components/layout';
+import TeamCenter from './pages/team-enter';
 import TeamInfo from './pages/team-info';
 import TeamCards from './pages/team-cards';
 import PlayerCards from './pages/player-cards';
@@ -19,6 +20,7 @@ function App() {
       <div className='contenter'>
         <BaseLayout>
           <Routes>
+            <Route path='team/center' element={<TeamCenter />} />
             <Route path='team/info' element={<TeamInfo />} />
             <Route path='team/cards' element={<TeamCards />} />
             <Route path='team/list' element={<TeamList />} />

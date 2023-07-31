@@ -70,8 +70,13 @@ const BaseLayout: React.FC<IProp> = (props: IProp) => {
 						{
 							key: 'team',
 							icon: <UserOutlined />,
-							label: '球队中心',
+							label: '球队管理',
 							children: [
+								{
+									key: 'team/center',
+									label: '球队中心',
+									icon: <UnorderedListOutlined />,
+								},
 								{
 									key: 'team/list',
 									label: '球队列表',
@@ -133,9 +138,6 @@ const BaseLayout: React.FC<IProp> = (props: IProp) => {
 				<Content
 					style={{
 						margin: '24px 16px',
-						padding: 24,
-						minHeight: 580,
-						background: colorBgContainer,
 					}}
 				>
 					{children}

@@ -1,0 +1,16 @@
+.team-center-wrap {
+	height: 100%;
+
+	.team-center-filter {
+		display: flex;
+		background-color: #fff;
+		flex-direction: row;
+		padding-top: 24px;
+		padding-left: 16px;
+
+		.filter-item {
+			display: flex;
+			margin-right: 16px;
+		}
+	}
+}

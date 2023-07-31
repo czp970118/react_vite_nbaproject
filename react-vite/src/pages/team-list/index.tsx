@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Table, Form, Select, Button, Input } from 'antd';
 import { useAntdTable } from 'ahooks'
-import { parttitionData } from '../../constan';
-import { ParttitionEnum } from '../../enum';
+import { parttitionData } from '@/constan';
+import { ParttitionEnum } from '@/enum';
 import { getAllTeams } from '../../request/api/team';
 
 import './index.scss';
