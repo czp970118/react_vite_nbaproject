@@ -10,6 +10,7 @@ import PlayerInfo from "./pages/play-info";
 import TeamList from "./pages/team-list";
 import ContextStudy from "./pages/context-study";
 import ReducerStudy from "./pages/reducer-study";
+import RefStudy from "./pages/ref-study";
 import "./App.css";
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
                   <Route path="player/info" element={<PlayerInfo />} />
                   <Route path="study/reducer" element={<ReducerStudy />} />
                   <Route path="study/context" element={<ContextStudy />} />
+                  <Route path="study/ref" element={<RefStudy />} />
                </Routes>
             </BaseLayout>
          </div>
