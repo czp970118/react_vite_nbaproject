@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Table, Form, Select, Button, Input } from "antd";
 import { useAntdTable } from "ahooks";
-import { parttitionData } from "@/constan";
+import { ParttitionData } from "@/constan";
 import { ParttitionEnum } from "@/enum";
 import { getAllTeams } from "../../request/api/team";
 
@@ -72,7 +72,7 @@ function TeamList() {
                <FormItem label="分区" name="partition" style={{ marginRight: 12 }}>
                   <Select
                      style={{ width: 200 }}
-                     options={parttitionData}
+                     options={ParttitionData}
                      placeholder="All"
                      allowClear
                   />

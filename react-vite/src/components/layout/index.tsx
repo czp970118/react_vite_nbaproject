@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 import {
    MenuFoldOutlined,
    MenuUnfoldOutlined,
@@ -12,7 +13,7 @@ import {
 import type { MenuProps } from "antd";
 import { Layout, Menu, Button, theme, Avatar, Dropdown } from "antd";
 import nablogo from "../../assets/nbalogo.jpg";
-import { clearCookie } from "../../../utils";
+import { clearCookie } from "../../utils";
 import "./index.scss";
 
 const { Header, Sider, Content } = Layout;

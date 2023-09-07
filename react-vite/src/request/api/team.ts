@@ -4,4 +4,8 @@ function getAllTeams(params) {
 	return http('get', '/api/getAllTeams', params)
 }
 
-export { getAllTeams };
+function queryTeamDetail(id) {
+	return http('get', '/api/getTeamDetails', id)
+}
+
+export { getAllTeams, queryTeamDetail };

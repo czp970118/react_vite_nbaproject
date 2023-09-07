@@ -1,23 +1,22 @@
-import React from 'react';
-import { Navigate } from 'react-router-dom';
-import { getCookie } from '../../../utils'
+import React from "react";
+import { Navigate } from "react-router-dom";
+import { getCookie } from "../../utils";
 
 interface IProps {
-	children: React.ReactElement;
+   children: React.ReactElement;
 }
-
 
 const UserRedirect = (props: IProps) => {
-	const loginStatus = getCookie('loginStatus');
-	const loginSubject = loginStatus ? JSON.parse(loginStatus) : {}
+   const loginStatus = getCookie("loginStatus");
+   const loginSubject = loginStatus ? JSON.parse(loginStatus) : {};
 
-	const { status } = loginSubject || {};
-	console.log('status', status);
-	if (!status) {
-		return <Navigate to='/' />
-	}
+   const { status } = loginSubject || {};
+   console.log("status", status);
+   if (!status) {
+      return <Navigate to="/" />;
+   }
 
-	return props.children;
-}
+   return props.children;
+};
 
 export default UserRedirect;
