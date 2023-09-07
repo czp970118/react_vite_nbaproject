@@ -32,5 +32,22 @@ Team.getAllTeams = (params, result) => {
 	})
 }
 
+Team.getTeamDetails = (params, result) => {
+	const { id } = params || {};
+	sql.query(`SELECT * FROM team WHERE teamId = ${id}`, (err, res) => {
+		console.log('error', err)
+		console.log('res', res)
+		if (err) {
+			result(null, err)
+		}
+		result({
+			code: 200,
+			message: 'success',
+			success: true,
+			data: res[0]
+		})
+	})
+}
+
 
 module.exports = Team;

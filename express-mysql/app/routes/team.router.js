@@ -6,5 +6,7 @@ module.exports = app => {
 
 	router.get('/getAllteams', team.getAllTeams);
 
+	router.get('/getTeamDetails', team.getTeamDetails);
+
 	app.use('/api', router);
 };

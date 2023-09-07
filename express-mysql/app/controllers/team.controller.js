@@ -11,4 +11,15 @@ exports.getAllTeams = (req, res) => {
 	})
 }
 
+exports.getTeamDetails = (req, res) => {
+	const params = req.query;
+	Team.getTeamDetails(params, (err, result) => {
+		if (err) {
+			res.send(err)
+		} else {
+			res.send(result);
+		}
+	})
+}
+
 
