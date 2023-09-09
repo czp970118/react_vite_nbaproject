@@ -1,0 +1,7 @@
+const Permissions = {
+	admin: ['ADD_TEAM', 'DELETE_TEAM', 'EDIT_TEAM', 'VIEM_TEAM', 'ADD_USER', 'EDIT_USER', 'DELETE_USER', 'ADD_PLAYER', 'EDIT_PLAYER', 'VIEW_PLAYER', 'DELETE_PLAYER', 'VIEW_PLAYER'],
+	manager: ['ADD_TEAM', 'EDIT_TEAM', 'VIEM_TEAM', 'ADD_USER', 'EDIT_USER', 'ADD_PLAYER', 'EDIT_PLAYER', 'VIEW_PLAYER',],
+	user: ['VIEM_TEAM', 'VIEW_PLAYER', 'VIEW_USER']
+}
+
+module.exports = { Permissions };

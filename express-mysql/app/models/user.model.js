@@ -1,5 +1,4 @@
 const sql = require('./db.js');
-
 const User = function () {
 
 };
@@ -21,7 +20,6 @@ User.login = ({ userName, userPassword }, result) => {
 User.register = async ({ userName, userPassword }, result) => {
 	try {
 		sql.query('select * from user where userName=?', [userName], (err, res) => {
-			console.log('res===>', res)
 			if (!res || res.length === 0) {
 				sql.query('insert into user value (?,?,?)', [0, userName, userPassword]);
 				result(null, { success: true, code: 0, msg: '注册成功!' })
@@ -39,7 +37,6 @@ User.getUserInfo = async (userName, result) => {
 		sql.query('select * from user where userName=?', [userName], (error, res) => {
 			if (error) result(error, { success: false });
 			if (res.length) {
-				console.log('res===>', res)
 				result(res[0], null)
 			} else {
 				result({ code: 1, mes: '没有此用户信息!' }, null)

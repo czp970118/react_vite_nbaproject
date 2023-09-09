@@ -33,6 +33,7 @@ app.get("/", (req, res) => {
 require("./app/routes/tutorial.routes.js")(app);
 require("./app/routes/user.router.js")(app);
 require("./app/routes/team.router.js")(app);
+require("./app/routes/player.router.js")(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8081;

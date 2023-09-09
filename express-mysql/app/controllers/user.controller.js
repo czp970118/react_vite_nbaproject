@@ -1,4 +1,5 @@
 const User = require('../models/user.model.js');
+const { Permissions } = require('../../constan.js');
 
 
 exports.login = (req, res) => {
@@ -36,8 +37,9 @@ exports.getUserInfo = (req, res) => {
 		if (error) {
 			res.status(404).send({})
 		} else {
-			const { userName, avatar, id } = result;
-			res.send({ success: true, message: '', user: { userName, userId: id, avatar } });
+			const { role, userName, avatar, id, } = result
+			const permissions = Permissions[role];
+			res.send({ success: true, message: '', user: { role, userName, avatar, id, permissions } });
 		}
 	})
 }
