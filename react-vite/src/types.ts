@@ -10,3 +10,8 @@ export interface TeamItem {
 	manager: string;
 	homeArena: string;
 }
+
+export interface TableParams {
+	current: number;
+	pageSize: number;
+}

@@ -1,0 +1,21 @@
+.filter-wrap {
+	padding: 12px 0;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	width: 100%;
+
+	.item-wrap {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+
+		.ant-form-item {
+			margin-bottom: 0;
+		}
+	}
+
+	.filter-search {
+		margin: 0 12px;
+	}
+}

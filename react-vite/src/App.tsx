@@ -3,17 +3,17 @@ import BaseStoreContext from "./context/base-store-context";
 import { Route, Routes } from "react-router-dom";
 import UserRedirect from "./components/use-redirect";
 import BaseLayout from "./components/layout";
-import TeamCenter from "./pages/team-enter";
-import TeamInfo from "./pages/team-info";
-import TeamCards from "./pages/team-cards";
-import PlayerCards from "./pages/player-cards";
+import TeamCenter from "./pages/team/team-enter";
+import TeamInfo from "./pages/team/team-info";
+import TeamCards from "./pages/team/team-cards";
+import PlayerCards from "./pages/player/player-cards";
 import UserInfo from "./pages/user-info";
-import PlayerInfo from "./pages/play-info";
-import TeamList from "./pages/team-list";
-import ContextStudy from "./pages/context-study";
-import ReducerStudy from "./pages/reducer-study";
-import RefStudy from "./pages/ref-study";
-import TeamDetail from "./pages/team-detail";
+import PlayerInfo from "./pages/player/player-info";
+import TeamList from "./pages/team/team-list";
+import ContextStudy from "./pages/study/context-study";
+import ReducerStudy from "./pages/study/reducer-study";
+import RefStudy from "./pages/study/reducer-study/ref-study";
+import TeamDetail from "./pages/team/team-detail";
 import "./App.css";
 
 function App() {

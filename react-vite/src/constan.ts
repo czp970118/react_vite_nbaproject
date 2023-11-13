@@ -7,4 +7,3 @@ export const ParttitionData = [
 	{ label: '太平洋分区', value: 'pac' }
 ]
 
-

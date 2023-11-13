@@ -3,7 +3,7 @@ import { Form, Select, Button, Input } from "antd";
 import { useAntdTable } from "ahooks";
 import { ParttitionData } from "@/constan";
 
-import { getAllTeams } from "../../../../request/api/team";
+import { getAllTeams } from "../../../../../request/api/team";
 
 import "./index.scss";
 

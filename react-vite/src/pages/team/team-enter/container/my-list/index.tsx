@@ -10,8 +10,6 @@ import TeamCard from "@/components/team-card";
 
 import "./index.scss";
 
-const { Meta } = Card;
-
 interface TableParams {
    current: number;
    pageSize: number;

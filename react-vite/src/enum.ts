@@ -7,3 +7,11 @@ export enum ParttitionEnum {
 	'wn' = '西北分区',
 	'pac' = '太平洋分区'
 }
+
+export enum CourtPositionEnum {
+	'PG' = '控卫',
+	'SG' = '得分后卫',
+	'SF' = '小前锋',
+	'PF' = '大前锋',
+	'C' = '中锋'
+}

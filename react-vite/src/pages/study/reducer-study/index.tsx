@@ -1,6 +1,6 @@
 import { useReducer } from "react";
-import { taskReducer } from "../../reducer/task-reducer";
-import { TaskContext, TaskDispatcherContext } from "../../context/task-context";
+import { taskReducer } from "../../../reducer/task-reducer";
+import { TaskContext, TaskDispatcherContext } from "../../../context/task-context";
 import AddTask from "./add-task";
 import TaskList from "./task-list";
 
