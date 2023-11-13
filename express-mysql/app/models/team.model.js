@@ -10,7 +10,6 @@ Team.getAllTeams = (params, result) => {
 		pageNum = 1
 	} = params;
 	const start = (Number(pageNum) - 1) * Number(pageSize);
-	console.log('start', start);
 	sql.query(`SELECT * FROM team limit ${pageSize} OFFSET ${start}`, (err, team) => {
 		sql.query("SELECT count(*) totalCount from team", (totalErr, totalRes) => {
 			if (err) {
