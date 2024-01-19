@@ -134,6 +134,16 @@ const BaseLayout: React.FC<IProp> = (props: IProp) => {
                            label: "ref学习",
                            icon: <UserOutlined />,
                         },
+                        {
+                           key: "study/components",
+                           label: "组件",
+                           icon: <UserOutlined />,
+                        },
+                        {
+                           key: "study/mobx",
+                           label: "mobx",
+                           icon: <UserOutlined />,
+                        },
                      ],
                   },
                ]}

@@ -11,3 +11,16 @@
 		align-items: center;
 	}
 }
+
+.test-wrap {
+	display: flex;
+	margin-top: 20px;
+
+	.test-item {
+		margin-right: 6px;
+	}
+
+	.sort-btn {
+		cursor: pointer;
+	}
+}

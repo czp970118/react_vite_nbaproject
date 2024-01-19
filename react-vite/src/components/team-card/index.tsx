@@ -11,8 +11,6 @@ const { Meta } = Card;
 const TeamCard = (props: IProps) => {
    const { item } = props;
 
-   console.log("item", item);
-
    return (
       <Card
          hoverable

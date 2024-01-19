@@ -21,3 +21,9 @@ export const setCookie = (name: string, value: string, expire_days = 1) => {
 export const clearCookie = (name: string) => {
 	setCookie(name, '', -1);
 }
+
+export const getPageType = (obj: any) => {
+	let type = typeof obj;
+	if (type !== 'object') return type;
+	return Object.prototype.toString.call(obj).replace(/^$/, '$1')
+}

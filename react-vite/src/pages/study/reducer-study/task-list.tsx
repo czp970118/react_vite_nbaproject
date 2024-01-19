@@ -24,7 +24,7 @@ function TaskList(props: IProps) {
       <div className="task-list">
          {list.map((item: TaskItem) => {
             return (
-               <div className="task-list-item">
+               <div className="task-list-item" key={item?.id}>
                   <Checkbox checked={item?.done} style={{ marginRight: 8 }} />
                   {item?.edit ? (
                      <Input
