@@ -1,0 +1,48 @@
+.container {
+	background-color: #262626;
+
+	.box-wrap {
+		display: flex;
+		flex-wrap: wrap;
+		filter: hue-rotate(angle);
+		-webkit-box-reflect: below 1px linear-gradient(transparent, transparent, transparent, rgba(0, 0, 0, 0.4));
+
+		.box {
+			margin: 0 20px;
+			width: 320px;
+			height: 400px;
+			background-color: #444;
+			border-radius: 20px;
+			background: linear-gradient(45deg, #2da2ff 25%, #444 25%, #444 50%, #2da2ff 50%, #2da2ff 75%, #444 75%, #444 100%);
+			background-size: 40px 40px;
+			filter: grayscale(1);
+			animation: animateBg 0.5s linear infinite;
+			animation-play-state: paused;
+			cursor: pointer;
+			transition: filter 1;
+		}
+
+		.box:nth-child(2) {
+			background: linear-gradient(135deg, #ff61ea 25%, #444 25%, #444 50%, #ff61ea 50%, #ff61ea 75%, #444 75%, #444 100%);
+			background-size: 40px 40px;
+
+		}
+
+		.box:hover {
+			animation-play-state: running;
+			filter: grayscale(0);
+		}
+
+		@keyframes animateBg {
+			0% {
+				background-position: 0;
+			}
+
+			100% {
+				background-position: 40px;
+			}
+		}
+	}
+
+
+}
