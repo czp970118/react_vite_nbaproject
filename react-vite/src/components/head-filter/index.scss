@@ -4,6 +4,8 @@
 	flex-wrap: wrap;
 	justify-content: space-between;
 	width: 100%;
+	align-items: center;
+
 
 	.item-wrap {
 		display: flex;
@@ -13,6 +15,11 @@
 		.ant-form-item {
 			margin-bottom: 0;
 		}
+	}
+
+	.form-btn-group {
+		display: flex;
+		align-items: center;
 	}
 
 	.filter-search {

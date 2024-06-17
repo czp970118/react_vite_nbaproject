@@ -7,3 +7,10 @@ export const ParttitionData = [
 	{ label: '太平洋分区', value: 'pac' }
 ]
 
+export const POSITION_DATASOURCE = [
+	{ label: "控卫", value: "pg" },
+	{ label: "分卫", value: "sg" },
+	{ label: "小前锋", value: "sf" },
+	{ label: "大前锋", value: "pf" },
+	{ label: "中锋", value: "c" },
+];

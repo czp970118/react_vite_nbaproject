@@ -52,3 +52,9 @@
 		width: 100%;
 	}
 }
+
+.create-form {
+	.ant-form-item-label>label {
+		color: #000 !important;
+	}
+}

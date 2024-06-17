@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Spin, Table, Form } from "antd";
+import { Spin, Table, Form, Modal, Input, Select, InputNumber } from "antd";
 import { useParams } from "react-router-dom";
 import http from "@/request/http";
 import { TeamItem, TableParams } from "@/types";
 import { ParttitionEnum, CourtPositionEnum } from "@/enum";
 import { useAntdTable } from "ahooks";
 import HeadFilter from "@/components/head-filter";
+import { POSITION_DATASOURCE } from "@/constan";
 
 import "./index.scss";
 
@@ -49,9 +50,11 @@ function TeamDetail() {
    const params = useParams();
    const { id } = params || {};
    const [form] = Form.useForm();
+   const [createForm] = Form.useForm();
 
    const [teamDetail, setTeamDetail] = useState<TeamDetailType>();
    const [loading, setLoading] = useState<boolean>(false);
+   const [createModal, setCreateModal] = useState<boolean>(false);
 
    const getTeamDetail = async (id: number) => {
       setLoading(true);
@@ -82,6 +85,12 @@ function TeamDetail() {
          total: 0,
       };
    };
+
+   const onCreate = () => {
+      setCreateModal(true);
+   };
+
+   const onClose = () => setCreateModal(false);
 
    useEffect(() => {
       getTeamDetail(Number(id));
@@ -124,18 +133,30 @@ function TeamDetail() {
                   </div>
                </div>
                <div className="team-player-table">
-                  <HeadFilter
-                     fieldItems={[
-                        {
-                           name: "name",
-                           label: "姓名",
-                        },
-                     ]}
-                  />
+                  <HeadFilter onCreate={onCreate} />
                   <Table style={{ width: "100%" }} {...tableProps} columns={columns} rowKey="id" />
                </div>
             </div>
          </Form>
+         <Modal title="Create player" open={createModal} onCancel={onClose}>
+            <Form form={createForm} className="create-form">
+               <Form.Item name="name" label="姓名" required>
+                  <Input placeholder="请输入" style={{ width: 200 }} />
+               </Form.Item>
+               <Form.Item name="position" label="位置" required>
+                  <Select options={POSITION_DATASOURCE} mode="tags" style={{ width: 200 }} />
+               </Form.Item>
+               <Form.Item name="number" label="号码">
+                  <InputNumber min={0} />
+               </Form.Item>
+               <Form.Item name="age" label="年龄">
+                  <InputNumber min={1} />
+               </Form.Item>
+               <Form.Item name="descript" label="介绍">
+                  <Input.TextArea rows={4} />
+               </Form.Item>
+            </Form>
+         </Modal>
       </Spin>
    );
 }
