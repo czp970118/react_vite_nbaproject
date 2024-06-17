@@ -1,9 +1,10 @@
 import React, { useReducer, useState } from "react";
 import { taskReducer } from "../../../reducer/task-reducer";
+import { Divider, Button } from "antd";
 import { TaskContext, TaskDispatcherContext } from "../../../context/task-context";
-import { quickSort, selectSort, insertSort } from "../../../utils/sort2";
 import AddTask from "./add-task";
 import TaskList from "./task-list";
+import { bubble } from "@/utils/sort3";
 
 import "./index.scss";
 
@@ -13,25 +14,57 @@ const initList = [
    { text: "第三条任务", id: 3, done: false, edit: false },
 ];
 
-const testArr = [6, 9, 3, 2, 5, 1, 7, 8];
+const testArr = [3, 5, 6, 1, 2, 4];
 
 function ReducerStudy() {
    const [taskList, dispatch] = useReducer(taskReducer, initList);
    const lastTaskId = taskList[taskList.length - 1].id;
-   // const [arr, setArr] = useState(testArr);
+   const [arr, setArr] = useState(testArr);
 
-   // const handleSort = () => {
-   //    const newArr = insetSort(testArr);
-   //    console.log("newArr(testArr)---->", newArr);
-   //    setArr(newArr);
-   // };
+   function fn1() {
+      const a = 1;
+      return function () {
+         console.log("a--->", a);
+      };
+   }
 
-   const test1 = insertSort(testArr);
-   console.log("test1----->", test1);
+   const res = fn1();
+   res();
+   console.dir(fn1);
+   /**
+    * 闭包的两个常用用途
+    * 1.保存私有变量，通过闭包可以在外部调用闭包函数，访问函数内部的变量
+    * 2.让已经结束的函数上下文中的变量对象继续留在内存中
+    */
+
+   /**
+    * 输出的都是6，这是由于setTimeOut是宏任务，由于js是事件循环机制，for循环的代码执行完之后才会执行setTimeout函数，所以输出的都属6
+    *
+    */
+   // for (var i = 0; i < 6; i++) {
+   //    // (function (j) {
+   //    //    setTimeout(function timer() {
+   //    //       console.log(j);
+   //    //    }, 0);
+   //    // })(i);
+   //    setTimeout(
+   //       function (j) {
+   //          console.log(j);
+   //       },
+   //       0,
+   //       i
+   //    );
+   // }
+
+   const onSortClick = () => {
+      const newArr = bubble(testArr);
+      console.log(newArr);
+      setArr(newArr);
+   };
 
    return (
       <TaskContext.Provider value={taskList}>
-         <TaskDispatcherContext.Provider value={dispatch}>
+         {/* <TaskDispatcherContext.Provider value={dispatch}>
             <AddTask
                addTask={(value) => {
                   dispatch({
@@ -56,15 +89,26 @@ function ReducerStudy() {
                   dispatch({ type: "update", value });
                }}
             />
-         </TaskDispatcherContext.Provider>
-         {/* <div className="test-wrap">
-            {arr.map((item: number) => {
-               return <div className="test-item">{item}</div>;
+         </TaskDispatcherContext.Provider> */}
+         <Divider children="水平居中" />
+         <div className="box-warp">
+            <div className="box1" />
+            <div className="box2" />
+            <span className="box3">box3</span>
+            <span className="box4" />
+         </div>
+         <Divider children="排序" />
+         <div className="sort-warp">
+            {arr.map((item, index) => {
+               return (
+                  <span className="sort-item" key={item}>
+                     {item}
+                     {index < arr.length - 1 ? "," : ""}
+                  </span>
+               );
             })}
-            <div onClick={handleSort} className="sort-btn">
-               排序
-            </div>
-         </div> */}
+            <Button onClick={onSortClick}>排序</Button>
+         </div>
       </TaskContext.Provider>
    );
 }

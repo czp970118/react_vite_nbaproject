@@ -1,19 +1,29 @@
 import React, { useState } from "react";
+import { Tabs } from "antd";
+import GlassNavigation from "./glass-navigation";
+import PictureHovering from "./picture-hovering";
 
-import './index.css';
+import "./index.scss";
 
+const tabItems = [
+   {
+      key: "1",
+      label: "玻璃导航",
+      children: <GlassNavigation />,
+   },
+   {
+      key: "2",
+      label: "图片悬停",
+      children: <PictureHovering />,
+   },
+];
 
 function TeamInfo(props: any) {
-	const [count, setCount] = useState<number>(1);
-
-	return (
-		<>
-			<div>{count}</div>
-			<div onClick={() => {
-				setCount(count + 1);
-			}}>点击增加</div>
-		</>
-	)
+   return (
+      <div className="page-warp">
+         <Tabs items={tabItems} style={{ width: "100%", height: "100%" }} />
+      </div>
+   );
 }
 
 export default TeamInfo;
