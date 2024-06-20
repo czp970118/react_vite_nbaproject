@@ -8,9 +8,17 @@ export const ParttitionData = [
 ]
 
 export const POSITION_DATASOURCE = [
-	{ label: "控卫", value: "pg" },
-	{ label: "分卫", value: "sg" },
-	{ label: "小前锋", value: "sf" },
-	{ label: "大前锋", value: "pf" },
-	{ label: "中锋", value: "c" },
+	{ label: "控卫", value: "PG", },
+	{ label: "分卫", value: "SG" },
+	{ label: "小前锋", value: "SF" },
+	{ label: "大前锋", value: "PF" },
+	{ label: "中锋", value: "C" },
 ];
+
+export enum PositionEnum {
+	PG = "green",
+	SG = "cyan",
+	SF = "blue",
+	PF = "geekblue",
+	C = "red",
+};

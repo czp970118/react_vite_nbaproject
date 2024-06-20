@@ -1,11 +1,8 @@
 module.exports = app => {
-
 	const player = require('../controllers/player.controller.js');
-
-	var router = require("express").Router();
-
+	const router = require("express").Router();
 	router.get('/getAllPlayers', player.getAllPlayers);
-
+	router.post('/createPlayer', player.createPlayer);
+	router.post('/player/removePlayerFromTeam', player.removePlayerFromTeam)
 	app.use('/api', router);
-
 };

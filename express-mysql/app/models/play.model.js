@@ -6,8 +6,8 @@ const Player = function (options) {
 
 Player.getAllPlayers = (params, result) => {
 	const {
-		pageSize = 10,
-		pageNum = 1,
+		pageSize,
+		pageNum,
 		name,
 		teamId
 	} = params;
@@ -25,9 +25,10 @@ Player.getAllPlayers = (params, result) => {
 	query += extraQuery;
 	totalQuery += extraQuery;
 
-
-	const start = (Number(pageNum) - 1) * Number(pageSize);
-	query += ` limit ${pageSize} OFFSET ${start}`
+	if (pageNum && pageSize) {
+		const start = (Number(pageNum) - 1) * Number(pageSize);
+		query += ` limit ${pageSize} OFFSET ${start}`
+	}
 
 	sql.query(query, (error, res) => {
 		sql.query(totalQuery, (totalErr, totalRes) => {
@@ -41,5 +42,36 @@ Player.getAllPlayers = (params, result) => {
 
 	})
 }
+
+Player.createPlyer = (params, result) => {
+	sql.query('INSERT INTO player (name ,teamId, age, number, position, capability ) VALUES (?, ?, ?, ?, ?, ?)', params, (err, data) => {
+		if (err) {
+			result(err, null);
+			return;
+		}
+		result(null, { success: true, msg: 'created success', code: 200 });
+	})
+}
+
+Player.updatePlayerById = (id, params, result) => {
+	let SQL = 'UPDATE player SET';
+	let isFirstParam = true;
+	for (let key in params) {
+		if (!isFirstParam) {
+			SQL += ', ';
+		}
+		SQL += ` ${key} = ?`;
+		isFirstParam = false;
+	}
+	SQL += ' WHERE id = ?'
+	sql.query(SQL, [...Object.values(params), id], (err, data) => {
+		if (err) {
+			result({ success: false, msg: err.sqlMessage, code: 500, });
+			return;
+		}
+		result({ success: true, msg: 'updated success', code: 200 });
+	})
+}
+
 
 module.exports = Player;
