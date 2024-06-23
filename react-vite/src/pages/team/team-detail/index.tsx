@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
    Spin,
    Table,
@@ -11,14 +11,17 @@ import {
    Tag,
    Space,
    Button,
+   Image,
+   Upload,
 } from "antd";
+import PlayerModal from "../components/player-modal";
 import { useParams } from "react-router-dom";
 import http from "@/request/http";
 import { TeamItem, TableParams } from "@/types";
 import { ParttitionEnum } from "@/enum";
 import { useAntdTable } from "ahooks";
 import HeadFilter from "@/components/head-filter";
-import { POSITION_DATASOURCE, PositionEnum } from "@/constan";
+import { PositionEnum } from "@/constan";
 
 import "./index.scss";
 
@@ -28,10 +31,10 @@ function TeamDetail() {
    const params = useParams();
    const { id } = params || {};
    const [form] = Form.useForm();
-   const [createForm] = Form.useForm();
    const [teamDetail, setTeamDetail] = useState<TeamDetailType>();
    const [loading, setLoading] = useState<boolean>(false);
    const [createModal, setCreateModal] = useState<boolean>(false);
+   const [playerModalInitValues, setPlayerModalInitValues] = useState<any>({});
 
    const getTeamDetail = async (id: number) => {
       setLoading(true);
@@ -68,18 +71,21 @@ function TeamDetail() {
       setCreateModal(true);
    };
 
-   const onCreate = async () => {
-      createForm.validateFields().then(async (params) => {
-         const res = await http("post", "/api/createPlayer", { ...params, teamId: id });
-         if (res.success) {
-            message.success("创建成功");
-         }
-         setCreateModal(false);
-         submit();
-      });
+   const onCreate = async (values: any) => {
+      const res = await http("post", "/api/createPlayer", { ...values, teamId: id });
+      if (res.success) {
+         message.success("创建成功");
+      }
+      setCreateModal(false);
+      submit();
    };
 
    const onClose = () => setCreateModal(false);
+
+   const onEditPlayer = (values: any) => {
+      setPlayerModalInitValues(values);
+      setCreateModal(true);
+   };
 
    const onRemove = (id: number) => {
       Modal.confirm({
@@ -143,7 +149,14 @@ function TeamDetail() {
          render: (text: string, record: any) => {
             return (
                <Space>
-                  <Button type="link">编辑</Button>
+                  <Button
+                     type="link"
+                     onClick={() => {
+                        onEditPlayer(record);
+                     }}
+                  >
+                     编辑
+                  </Button>
                   <Button
                      type="link"
                      onClick={() => {
@@ -208,40 +221,12 @@ function TeamDetail() {
                </div>
             </div>
          </Form>
-         <Modal title="Create player" open={createModal} onCancel={onClose} onOk={onCreate}>
-            <Form form={createForm} className="create-form">
-               <Form.Item
-                  name="name"
-                  label="姓名"
-                  rules={[{ required: true, message: "请输入姓名" }]}
-               >
-                  <Input placeholder="请输入" style={{ width: 200 }} />
-               </Form.Item>
-               <Form.Item
-                  name="position"
-                  label="位置"
-                  rules={[{ required: true, message: "请至少选择一个位置" }]}
-               >
-                  <Select options={POSITION_DATASOURCE} mode="tags" style={{ width: 200 }} />
-               </Form.Item>
-               <Form.Item
-                  name="number"
-                  label="号码"
-                  rules={[{ required: true, message: "请输入号码" }]}
-               >
-                  <InputNumber min={0} />
-               </Form.Item>
-               <Form.Item name="age" label="年龄">
-                  <InputNumber min={1} />
-               </Form.Item>
-               <Form.Item name="capability" label="能力值">
-                  <InputNumber min={1} />
-               </Form.Item>
-               <Form.Item name="descript" label="介绍">
-                  <Input.TextArea rows={4} />
-               </Form.Item>
-            </Form>
-         </Modal>
+         <PlayerModal
+            initValues={playerModalInitValues}
+            open={createModal}
+            onClose={onClose}
+            onOk={onCreate}
+         />
       </Spin>
    );
 }
