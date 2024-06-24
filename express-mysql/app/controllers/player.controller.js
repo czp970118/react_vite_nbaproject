@@ -23,14 +23,15 @@ const createPlayer = function (req, res) {
 				})
 			} else {
 				Player.createPlyer(
-					[
+					{
 						name,
 						teamId,
 						age,
 						number,
-						position.join(','),
-						capability
-					], (err, result) => {
+						position: position.join(','),
+						capability,
+						describe
+					}, (err, result) => {
 						if (err) {
 							res.send(err)
 						} else {
