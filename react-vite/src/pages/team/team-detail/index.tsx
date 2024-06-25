@@ -4,17 +4,12 @@ import {
    Table,
    Form,
    Modal,
-   Input,
-   Select,
-   InputNumber,
    message,
    Tag,
    Space,
    Button,
-   Image,
-   Upload,
 } from "antd";
-import PlayerModal from "../components/player-modal";
+import PlayerModal from "../../../components/player-modal";
 import { useParams } from "react-router-dom";
 import http from "@/request/http";
 import { TeamItem, TableParams } from "@/types";

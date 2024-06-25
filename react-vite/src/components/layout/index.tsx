@@ -86,7 +86,7 @@ const BaseLayout: React.FC<IProp> = (props: IProp) => {
                            icon: <GlobalOutlined />,
                         },
                         {
-                           key: "team/cards",
+                           key: "team/create",
                            label: "球队卡片",
                            icon: <UserOutlined />,
                         },

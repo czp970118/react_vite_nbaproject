@@ -11,7 +11,6 @@
 		grid-row-gap: 10px;
 
 		.team-card-wrap {
-			height: 300px;
 			border: 1px solid #eee;
 			cursor: pointer;
 			border-top-left-radius: 6px;
@@ -44,9 +43,21 @@
 			}
 		}
 
+		.create-btn {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			border-radius: 6px;
+		}
+
 		.team-card-wrap:hover {
 			border-color: #1677FF;
+			color: #1677FF;
 
+			svg {
+				color: #1677FF;
+			}
 		}
 	}
 }

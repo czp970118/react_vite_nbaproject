@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { Form, Select, Button, Input, Card } from "antd";
+import { Form } from "antd";
 import { useAntdTable } from "ahooks";
 import { useNavigate } from "react-router-dom";
-import { ParttitionData } from "@/constan";
-
 import { getAllTeams } from "@/request/api/team";
 import { TeamItem } from "@/types";
+import { PlusOutlined } from "@ant-design/icons";
 import TeamCard from "@/components/team-card";
 
 import "./index.scss";
@@ -33,9 +31,17 @@ export default function MyList() {
       navigate(`/pages/team/detail/${id}`);
    };
 
+   const handleClickCreate = () => {
+      navigate(`/pages/team/create`);
+   };
+
    return (
       <Form className="team-center-wrap" form={form} colon>
          <div className="team-card-list">
+            <div className="team-card-wrap create-btn" onClick={handleClickCreate}>
+               <PlusOutlined style={{ fontSize: "30px", marginBottom: 12 }} />
+               <span>创建球队</span>
+            </div>
             {tableProps?.dataSource?.map((item: TeamItem) => {
                return (
                   <div
