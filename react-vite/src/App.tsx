@@ -4,8 +4,6 @@ import { Route, Routes } from "react-router-dom";
 import UserRedirect from "./components/use-redirect";
 import BaseLayout from "./components/layout";
 import TeamCenter from "./pages/team/team-enter";
-import TeamInfo from "./pages/team/team-info";
-import TeamCards from "./pages/team/team-cards";
 import PlayerCards from "./pages/player/player-cards";
 import UserInfo from "./pages/user-info";
 import PlayerInfo from "./pages/player/player-info";
@@ -28,8 +26,6 @@ function App() {
                <BaseLayout>
                   <Routes>
                      <Route path="team/center" element={<TeamCenter />} />
-                     <Route path="team/info" element={<TeamInfo />} />
-                     <Route path="team/cards" element={<TeamCards />} />
                      <Route path="team/detail/:id" element={<TeamDetail />} />
                      <Route path="team/list" element={<TeamList />} />
                      <Route path="team/create" element={<TeamCreate />} />

@@ -5,9 +5,11 @@ import {
    MenuUnfoldOutlined,
    UploadOutlined,
    UserOutlined,
-   VideoCameraOutlined,
+   TeamOutlined,
    UnorderedListOutlined,
-   GlobalOutlined,
+   CrownOutlined,
+   FlagOutlined,
+   ContactsOutlined,
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { Layout, Menu, Button, theme, Avatar, Dropdown } from "antd";
@@ -67,40 +69,30 @@ const BaseLayout: React.FC<IProp> = (props: IProp) => {
                items={[
                   {
                      key: "team",
-                     icon: <UserOutlined />,
+                     icon: <FlagOutlined />,
                      label: "球队管理",
                      children: [
                         {
                            key: "team/center",
                            label: "球队中心",
-                           icon: <UnorderedListOutlined />,
+                           icon: <CrownOutlined />,
                         },
                         {
                            key: "team/list",
                            label: "球队列表",
                            icon: <UnorderedListOutlined />,
                         },
-                        {
-                           key: "team/info",
-                           label: "球队信息",
-                           icon: <GlobalOutlined />,
-                        },
-                        {
-                           key: "team/create",
-                           label: "球队卡片",
-                           icon: <UserOutlined />,
-                        },
                      ],
                   },
                   {
                      key: "/player",
-                     icon: <VideoCameraOutlined />,
-                     label: "球员中心",
+                     icon: <TeamOutlined />,
+                     label: "球员管理",
                      children: [
                         {
                            key: "player/info",
-                           label: "球员信息",
-                           icon: <UserOutlined />,
+                           label: "球员中心",
+                           icon: <ContactsOutlined />,
                         },
                         {
                            key: "player/cards",
