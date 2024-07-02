@@ -1,7 +1,6 @@
 import React from "react";
 import { Card } from "antd";
 import { TeamItem } from "../../types";
-import { ParttitionEnum } from "@/enum";
 
 interface IProps {
    item: TeamItem;
@@ -15,7 +14,9 @@ const TeamCard = (props: IProps) => {
       <Card
          hoverable
          style={{ width: 276 }}
-         cover={<img alt="example" style={{ maxHeight: 120 }} src={item.logo} />}
+         cover={
+            <img alt="example" style={{ maxHeight: 120, objectFit: "cover" }} src={item.logo} />
+         }
       >
          <Meta
             title={item?.teamName}

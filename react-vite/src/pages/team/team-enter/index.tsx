@@ -1,8 +1,8 @@
 import React from "react";
-import { Tabs } from "antd";
+import { Tabs, Breadcrumb } from "antd";
 import type { TabsProps } from "antd";
+import AllList from "./container/all-list";
 import MyList from "./container/my-list";
-import AllList from "./container/my-list";
 
 import "./index.scss";
 
@@ -24,11 +24,13 @@ function TeamCenter() {
    ];
 
    return (
-      <Tabs
-         style={{ background: "#FFF", padding: 16, height: "100%", overflowY: "scroll" }}
-         defaultActiveKey={ALL}
-         items={items}
-      />
+      <div>
+         <Tabs
+            style={{ background: "#FFF", padding: 16, height: "100%", overflowY: "scroll" }}
+            defaultActiveKey={ALL}
+            items={items}
+         />
+      </div>
    );
 }
 

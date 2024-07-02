@@ -6,7 +6,6 @@ import {
    UploadOutlined,
    UserOutlined,
    TeamOutlined,
-   UnorderedListOutlined,
    CrownOutlined,
    FlagOutlined,
    ContactsOutlined,
@@ -77,11 +76,6 @@ const BaseLayout: React.FC<IProp> = (props: IProp) => {
                            label: "球队中心",
                            icon: <CrownOutlined />,
                         },
-                        {
-                           key: "team/list",
-                           label: "球队列表",
-                           icon: <UnorderedListOutlined />,
-                        },
                      ],
                   },
                   {
@@ -112,28 +106,8 @@ const BaseLayout: React.FC<IProp> = (props: IProp) => {
                      label: "学习中心",
                      children: [
                         {
-                           key: "study/reducer",
-                           label: "Reducer学习",
-                           icon: <UserOutlined />,
-                        },
-                        {
                            key: "study/context",
                            label: "context学习",
-                           icon: <UserOutlined />,
-                        },
-                        {
-                           key: "study/ref",
-                           label: "ref学习",
-                           icon: <UserOutlined />,
-                        },
-                        {
-                           key: "study/components",
-                           label: "组件",
-                           icon: <UserOutlined />,
-                        },
-                        {
-                           key: "study/mobx",
-                           label: "mobx",
                            icon: <UserOutlined />,
                         },
                      ],

@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { Form, Select, Button, Input } from "antd";
+import { Form } from "antd";
 import { useAntdTable } from "ahooks";
-import { ParttitionData } from "@/constan";
-
-import { getAllTeams } from "../../../../../request/api/team";
+import { useNavigate } from "react-router-dom";
+import { getAllTeams } from "@/request/api/team";
+import { TeamItem } from "@/types";
+import { PlusOutlined } from "@ant-design/icons";
+import TeamCard from "@/components/team-card";
 
 import "./index.scss";
 
@@ -12,10 +13,9 @@ interface TableParams {
    pageSize: number;
 }
 
-const FormItem = Form.Item;
-
 export default function AllList() {
    const [form] = Form.useForm();
+   const navigate = useNavigate();
 
    const getTeamList = async ({ current, pageSize }: TableParams) => {
       const res: any = await getAllTeams({ pageSize, pageNum: current });
@@ -23,36 +23,37 @@ export default function AllList() {
       if (success) return data;
    };
 
-   const { tableProps, search } = useAntdTable(getTeamList, {
+   const { tableProps } = useAntdTable(getTeamList, {
       form,
    });
 
-   const { submit } = search;
+   const handleClickCard = (id: number) => {
+      navigate(`/pages/team/detail/${id}`);
+   };
 
-   console.log("tableProps", tableProps);
+   const handleClickCreate = () => {
+      navigate(`/pages/team/create`);
+   };
 
    return (
-      <Form className="team-center-wrap" colon>
-         <div className="team-center-filter">
-            <div className="filter-item">
-               <FormItem label="分区" name="partition" style={{ marginRight: 12 }}>
-                  <Select
-                     style={{ width: 200 }}
-                     options={ParttitionData}
-                     placeholder="All"
-                     allowClear
-                  />
-               </FormItem>
-               <FormItem label="球队名称" name="teamName">
-                  <Input placeholder="请输入球队名称" style={{ width: 200 }} />
-               </FormItem>
+      <Form className="team-center-wrap" form={form} colon>
+         <div className="team-card-list">
+            <div className="team-card-wrap create-btn" onClick={handleClickCreate}>
+               <PlusOutlined style={{ fontSize: "30px", marginBottom: 12 }} />
+               <span>创建球队</span>
             </div>
-            <FormItem>
-               <Button type="primary" style={{ marginRight: 12 }}>
-                  Search
-               </Button>
-               <Button>Reset</Button>
-            </FormItem>
+            {tableProps?.dataSource?.map((item: TeamItem) => {
+               return (
+                  <div
+                     onClick={() => {
+                        handleClickCard(item.teamId);
+                     }}
+                     key={item.teamId}
+                  >
+                     <TeamCard item={item} />
+                  </div>
+               );
+            })}
          </div>
       </Form>
    );

@@ -1,7 +1,6 @@
 const User = require('../models/user.model.js');
 const { Permissions } = require('../../constan.js');
 
-
 exports.login = (req, res) => {
 	if (!req.body) {
 		res.status(400).send({

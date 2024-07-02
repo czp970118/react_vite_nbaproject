@@ -1,8 +1,9 @@
 const Team = require('../models/team.model.js');
+const teamInstance = new Team();
 
 exports.getAllTeams = (req, res) => {
 	const params = req.query;
-	Team.getAllTeams(params, (err, result) => {
+	teamInstance.getAllTeams(params, (err, result) => {
 		if (err) {
 			res.send(err)
 		} else {
@@ -13,11 +14,22 @@ exports.getAllTeams = (req, res) => {
 
 exports.getTeamDetails = (req, res) => {
 	const params = req.query;
-	Team.getTeamDetails(params, (err, result) => {
+	teamInstance.getTeamDetails(params, (err, result) => {
 		if (err) {
 			res.send(err)
 		} else {
 			res.send(result);
+		}
+	})
+}
+
+exports.createTeam = (req, res) => {
+	const data = req.body;
+	teamInstance.createTeam(data, (err, data) => {
+		if (err) {
+			res.send(err)
+		} else {
+			res.send(data);
 		}
 	})
 }

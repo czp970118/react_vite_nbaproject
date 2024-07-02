@@ -1,21 +1,16 @@
 import React, { useEffect } from "react";
-
 import { getUserInfo } from "../../request/api/user";
 
-import './index.scss';
+import "./index.scss";
 
 function UserInfo() {
+   useEffect(() => {
+      getUserInfo("czp").then((res) => {
+         console.log("res==>", res);
+      });
+   }, []);
 
-
-	useEffect(() => {
-		getUserInfo('czp').then((res) => {
-			console.log('res==>', res);
-		})
-	}, [])
-
-	return (
-		<div>UserInfo</div>
-	)
+   return <div>UserInfo</div>;
 }
 
 export default UserInfo;
