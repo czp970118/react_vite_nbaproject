@@ -15,3 +15,8 @@ export enum CourtPositionEnum {
 	'PF' = '大前锋',
 	'C' = '中锋'
 }
+
+export enum ModalModeEnum {
+	CREATE = 'create',
+	EDIT = 'edit'
+}

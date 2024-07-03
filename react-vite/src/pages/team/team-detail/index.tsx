@@ -3,8 +3,8 @@ import { Spin, Table, Form, Modal, message, Tag, Space, Button, Breadcrumb } fro
 import PlayerModal from "../../../components/player-modal";
 import { useParams } from "react-router-dom";
 import http from "@/request/http";
-import { TeamItem, TableParams } from "@/types";
-import { ParttitionEnum } from "@/enum";
+import { TeamItem, TableParams, ModalMode } from "@/types";
+import { ParttitionEnum, ModalModeEnum } from "@/enum";
 import { useAntdTable } from "ahooks";
 import HeadFilter from "@/components/head-filter";
 import { PositionEnum } from "@/constan";
@@ -20,6 +20,7 @@ function TeamDetail() {
    const [teamDetail, setTeamDetail] = useState<TeamDetailType>();
    const [loading, setLoading] = useState<boolean>(false);
    const [createModal, setCreateModal] = useState<boolean>(false);
+   const [modalMode, setModalMode] = useState<ModalMode>(ModalModeEnum.CREATE);
    const [playerModalInitValues, setPlayerModalInitValues] = useState<any>({});
 
    const getTeamDetail = async (id: number) => {
@@ -53,23 +54,30 @@ function TeamDetail() {
       };
    };
 
-   const onCreateClick = () => {
-      setCreateModal(true);
-   };
-
-   const onCreate = async (values: any) => {
-      const res = await http("post", "/api/createPlayer", { ...values, teamId: id });
-      if (res.success) {
+   const onCreateOrEdit = async (values: any) => {
+      const api = modalMode === ModalModeEnum.CREATE ? "/api/createPlayer" : "/api/updatePlayer";
+      const res: any = await http("post", api, { ...values, teamId: id });
+      const { success, errMsg } = res;
+      if (success) {
          message.success("创建成功");
+         setCreateModal(false);
+         submit();
+      } else {
+         message.error(errMsg);
       }
-      setCreateModal(false);
-      submit();
    };
 
    const onClose = () => setCreateModal(false);
 
-   const onEditPlayer = (values: any) => {
+   const onEditClick = (values: any) => {
+      setModalMode(ModalModeEnum.EDIT);
       setPlayerModalInitValues(values);
+      setCreateModal(true);
+   };
+
+   const onCreateClick = () => {
+      setModalMode(ModalModeEnum.CREATE);
+      setPlayerModalInitValues({});
       setCreateModal(true);
    };
 
@@ -138,7 +146,7 @@ function TeamDetail() {
                   <Button
                      type="link"
                      onClick={() => {
-                        onEditPlayer(record);
+                        onEditClick(record);
                      }}
                   >
                      编辑
@@ -227,7 +235,8 @@ function TeamDetail() {
                initValues={playerModalInitValues}
                open={createModal}
                onClose={onClose}
-               onOk={onCreate}
+               onOk={onCreateOrEdit}
+               mode={modalMode}
             />
          </Spin>
       </div>

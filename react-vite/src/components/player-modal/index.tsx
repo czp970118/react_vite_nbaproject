@@ -1,21 +1,10 @@
-import React, { useState } from "react";
-import {
-   Spin,
-   Table,
-   Form,
-   Modal,
-   Input,
-   Select,
-   InputNumber,
-   message,
-   Tag,
-   Space,
-   Button,
-   Image,
-   Upload,
-} from "antd";
-import { PlusOutlined } from "@ant-design/icons";
+import React, { useState, useEffect } from "react";
+import { Form, Modal, Input, Select, InputNumber } from "antd";
+import UploadImage from "@/components/upload";
 import { POSITION_DATASOURCE } from "@/constan";
+import { ModalMode } from "@/types";
+import { ModalModeEnum } from "@/enum";
+
 import "./index.scss";
 
 interface IProps {
@@ -23,23 +12,15 @@ interface IProps {
    onClose: () => void;
    onOk: (values: any) => void;
    initValues?: any;
+   mode: ModalMode;
 }
 
 const formLayout = {
    labelCol: { span: 4 },
 };
 
-const uploadButton = (
-   <button style={{ border: 0, background: "none" }} type="button">
-      <PlusOutlined />
-      <div style={{ marginTop: 8 }}>Upload</div>
-   </button>
-);
-
-const imageUrl = "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png";
-
 const PlayerModal = (props: IProps) => {
-   const { open, onClose, onOk, initValues } = props;
+   const { open, onClose, onOk, initValues, mode } = props;
    const [form] = Form.useForm();
 
    const onSubmit = async () => {
@@ -53,21 +34,25 @@ const PlayerModal = (props: IProps) => {
          });
    };
 
+   useEffect(() => {
+      form.setFieldsValue(initValues);
+   }, [initValues]);
+
    return (
-      <Modal title="Create player" open={open} onCancel={onClose} onOk={onSubmit}>
-         <Form form={form} className="create-form" initialValues={initValues} {...formLayout}>
+      <Modal
+         title={mode === ModalModeEnum.CREATE ? "创建球员" : "编辑球员"}
+         open={open}
+         onCancel={onClose}
+         onOk={onSubmit}
+         destroyOnClose={true}
+      >
+         <Form form={form} className="create-form" preserve={false} {...formLayout}>
             <Form.Item name="avatar" className="avatar-item">
-               <Upload
-                  listType="picture-circle"
-                  showUploadList={false}
-                  action="https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload"
-               >
-                  {imageUrl ? (
-                     <Image preview={false} style={{ borderRadius: "100%" }} src={imageUrl} />
-                  ) : (
-                     uploadButton
-                  )}
-               </Upload>
+               <UploadImage
+                  onChange={(url: string) => {
+                     form.setFieldValue("avatar", url);
+                  }}
+               />
             </Form.Item>
             <Form.Item name="name" label="姓名" rules={[{ required: true, message: "请输入姓名" }]}>
                <Input placeholder="请输入" style={{ width: 300 }} />

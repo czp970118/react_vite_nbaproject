@@ -15,3 +15,5 @@ export interface TableParams {
 	current: number;
 	pageSize: number;
 }
+
+export type ModalMode = 'create' | 'edit';

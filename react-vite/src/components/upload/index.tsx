@@ -18,7 +18,7 @@ const beforeUpload = (file: any) => {
 };
 
 interface IProps {
-   onChange: (img: string | string[]) => void;
+   onChange?: (img: string) => void;
    name?: string;
 }
 
