@@ -1,5 +1,4 @@
-import React from "react";
-import { Tabs, Breadcrumb } from "antd";
+import { Tabs } from "antd";
 import type { TabsProps } from "antd";
 import AllList from "./container/all-list";
 import MyList from "./container/my-list";
