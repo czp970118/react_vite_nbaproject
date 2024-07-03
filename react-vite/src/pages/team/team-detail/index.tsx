@@ -1,14 +1,5 @@
 import { useEffect, useState } from "react";
-import {
-   Spin,
-   Table,
-   Form,
-   Modal,
-   message,
-   Tag,
-   Space,
-   Button,
-} from "antd";
+import { Spin, Table, Form, Modal, message, Tag, Space, Button, Breadcrumb } from "antd";
 import PlayerModal from "../../../components/player-modal";
 import { useParams } from "react-router-dom";
 import http from "@/request/http";
@@ -174,55 +165,72 @@ function TeamDetail() {
    const { submit } = search;
 
    return (
-      <Spin spinning={loading}>
-         <Form form={form} onFinish={submit}>
-            <div className="team-detail-container">
-               <div className="team-detail-top">
-                  <div className="team-detail-info">
-                     <div className="team-logo-wrap">
-                        <img src={teamDetail?.logo} className="team-logo" />
-                     </div>
-                     <div className="team-info">
-                        <span className="team-detail-title">{teamDetail?.teamName}</span>
-                        <div className="team-info-item">
-                           <span className="team-info-item-label">主教练:</span>
-                           <span className="team-info-item-text">{teamDetail?.manager}</span>
+      <div>
+         <Breadcrumb
+            items={[
+               {
+                  title: <a href="/#/pages/team/center">球队中心</a>,
+               },
+               {
+                  title: "球队详情",
+               },
+            ]}
+            style={{ marginBottom: 12 }}
+         />
+         <Spin spinning={loading}>
+            <Form form={form} onFinish={submit}>
+               <div className="team-detail-container">
+                  <div className="team-detail-top">
+                     <div className="team-detail-info">
+                        <div className="team-logo-wrap">
+                           <img src={teamDetail?.logo} className="team-logo" />
                         </div>
-                        <div className="team-info-item">
-                           <span className="team-info-item-label">主场球馆:</span>
-                           <span className="team-info-item-text">{teamDetail?.homeArena}</span>
-                        </div>
-                        <div className="team-info-item">
-                           <span className="team-info-item-label">所在城市:</span>
-                           <span className="team-info-item-text">{teamDetail?.city}</span>
-                        </div>
-                        <div className="team-info-item">
-                           <span className="team-info-item-label">所在分区:</span>
-                           <span className="team-info-item-text">
-                              {ParttitionEnum[teamDetail?.partition as keyof typeof ParttitionEnum]}
-                           </span>
+                        <div className="team-info">
+                           <span className="team-detail-title">{teamDetail?.teamName}</span>
+                           <div className="team-info-item">
+                              <span className="team-info-item-label">主教练:</span>
+                              <span className="team-info-item-text">{teamDetail?.manager}</span>
+                           </div>
+                           <div className="team-info-item">
+                              <span className="team-info-item-label">主场球馆:</span>
+                              <span className="team-info-item-text">{teamDetail?.homeArena}</span>
+                           </div>
+                           <div className="team-info-item">
+                              <span className="team-info-item-label">所在城市:</span>
+                              <span className="team-info-item-text">{teamDetail?.city}</span>
+                           </div>
+                           <div className="team-info-item">
+                              <span className="team-info-item-label">所在分区:</span>
+                              <span className="team-info-item-text">
+                                 {
+                                    ParttitionEnum[
+                                       teamDetail?.partition as keyof typeof ParttitionEnum
+                                    ]
+                                 }
+                              </span>
+                           </div>
                         </div>
                      </div>
                   </div>
+                  <div className="team-player-table">
+                     <HeadFilter onCreate={onCreateClick} />
+                     <Table
+                        style={{ width: "100%" }}
+                        {...tableProps}
+                        columns={columns as any}
+                        rowKey="id"
+                     />
+                  </div>
                </div>
-               <div className="team-player-table">
-                  <HeadFilter onCreate={onCreateClick} />
-                  <Table
-                     style={{ width: "100%" }}
-                     {...tableProps}
-                     columns={columns as any}
-                     rowKey="id"
-                  />
-               </div>
-            </div>
-         </Form>
-         <PlayerModal
-            initValues={playerModalInitValues}
-            open={createModal}
-            onClose={onClose}
-            onOk={onCreate}
-         />
-      </Spin>
+            </Form>
+            <PlayerModal
+               initValues={playerModalInitValues}
+               open={createModal}
+               onClose={onClose}
+               onOk={onCreate}
+            />
+         </Spin>
+      </div>
    );
 }
 

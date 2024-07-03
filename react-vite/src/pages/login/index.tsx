@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Button, Input, Checkbox, Form, Spin, message } from "antd";
+import { useState } from "react";
+import { Button, Input, Checkbox, Form, message } from "antd";
 import type { CheckboxChangeEvent } from "antd/es/checkbox";
 import { useNavigate } from "react-router-dom";
 import { login } from "../../request/api/user";
@@ -32,7 +32,7 @@ function Login() {
          message.success("登陆成功!");
          setCookie("loginStatus", JSON.stringify({ userName: values.userName, status: success }));
          setTimeout(() => {
-            navigate("/pages/team/info");
+            navigate("/pages/team/center");
          }, 300);
       } else {
          message.error(msg);

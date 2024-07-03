@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Upload, message, Image } from "antd";
-import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
+import { LoadingOutlined, PlusOutlined, DeleteOutlined, EyeOutlined } from "@ant-design/icons";
 
 import "./index.scss";
 
@@ -26,6 +26,8 @@ const UploadImage = (props: IProps) => {
    const { onChange } = props;
    const [loading, setLoading] = useState<boolean>(false);
    const [imageUrl, setImageUrl] = useState<string>();
+   const [showActions, setShowActions] = useState<boolean>(false);
+   const [preview, setPreview] = useState<boolean>(false);
 
    const config = {
       action: uploadUrl,
@@ -57,6 +59,17 @@ const UploadImage = (props: IProps) => {
       </button>
    );
 
+   const onRemove = (e) => {
+      e.stopPropagation();
+      setImageUrl("");
+      onChange && onChange("");
+   };
+
+   const onPreview = (e) => {
+      e.stopPropagation();
+      setPreview(true);
+   };
+
    return (
       <Upload
          {...config}
@@ -65,9 +78,39 @@ const UploadImage = (props: IProps) => {
          listType="picture-card"
          className="avatar-uploader"
          accept="image"
+         openFileDialogOnClick={!imageUrl}
       >
          {imageUrl ? (
-            <Image src={imageUrl} style={{ width: 100, height: 100, borderRadius: 8 }} />
+            <div
+               className="image-wrap"
+               onMouseEnter={() => {
+                  setShowActions(true);
+               }}
+               onMouseLeave={() => {
+                  setShowActions(false);
+               }}
+            >
+               <Image
+                  src={imageUrl}
+                  style={{ width: 100, height: 100, borderRadius: 8 }}
+                  preview={{
+                     visible: preview,
+                     onVisibleChange: (visible) => {
+                        setPreview(visible);
+                     },
+                  }}
+               />
+               {showActions ? (
+                  <div className="image-actions">
+                     <span className="action-item" onClick={onPreview}>
+                        <EyeOutlined style={{ fontSize: 16, color: "#fff" }} />
+                     </span>
+                     <span className="action-item" onClick={onRemove}>
+                        <DeleteOutlined style={{ fontSize: 16, color: "#fff" }} />
+                     </span>
+                  </div>
+               ) : null}
+            </div>
          ) : (
             uploadButton
          )}
