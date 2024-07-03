@@ -4,6 +4,8 @@ const client = new OSS({
 	region: "oss-cn-beijing",
 	endpoint: "oss-cn-beijing.aliyuncs.com",
 	bucket: "czp-project",
+	accessKeyId: ACCESS_KEY_ID,
+	accessKeySecret: ACCESS_KEY_SECRET,
 });
 
 async function generateSignedUrl(url) {
