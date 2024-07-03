@@ -3,6 +3,7 @@ module.exports = app => {
 	const router = require("express").Router();
 	router.get('/getAllPlayers', player.getAllPlayers);
 	router.post('/createPlayer', player.createPlayer);
+	router.post('/updatePlayer', player.updatePlayer);
 	router.post('/player/removePlayerFromTeam', player.removePlayerFromTeam)
 	app.use('/api', router);
 };

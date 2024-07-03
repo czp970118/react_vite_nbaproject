@@ -79,6 +79,19 @@ class PlayerModel {
 			result({ success: true, msg: 'updated success', code: 200 });
 		})
 	}
-}
+	findPlayer = async (params, resilt) => {
+		let SQL = 'SELECT * FROM player';
+		let isFirstParam = true;
+		Object.keys(params).forEach((key) => {
+			SQL += ` ${isFirstParam ? 'WHERE' : 'AND'} ${key} = ?`;
+			isFirstParam = false;
+		});
+		console.log('SQL----->', SQL);
+		sql.query(SQL, Object.values(params), (err, rows) => {
+			console.log('err---->', err);
+			console.log('rows--->', rows);
+		})
+	}
+};
 
 module.exports = new PlayerModel();

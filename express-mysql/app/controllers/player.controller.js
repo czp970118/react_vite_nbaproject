@@ -1,7 +1,7 @@
-const Player = require('../models/play.model.js');
+const PlayerModel = require('../models/play.model.js');
 const getAllPlayers = function (req, res) {
 	const params = req.query;
-	Player.getAllPlayers(params, (err, result) => {
+	PlayerModel.getAllPlayers(params, (err, result) => {
 		if (err) {
 			res.send(err)
 		} else {
@@ -12,7 +12,7 @@ const getAllPlayers = function (req, res) {
 
 const createPlayer = function (req, res) {
 	const { teamId, number, position, age, describe, name, capability } = req.body;
-	Player.getAllPlayers({ teamId }, (err, result) => {
+	PlayerModel.getAllPlayers({ teamId }, (err, result) => {
 		if (err) {
 			res.send(err)
 		} else {
@@ -44,15 +44,20 @@ const createPlayer = function (req, res) {
 			}
 		}
 	});
+};
 
+const updatePlayer = function (req, res) {
+	const { teamId, number } = req.body;
+	PlayerModel.findPlayer({ teamId, number }, (err, result) => {
 
+	})
 }
 
 const removePlayerFromTeam = function (req, res) {
 	const { id } = req.body;
-	Player.updatePlayerById(id, { teamId: null }, (result) => {
+	PlayerModel.updatePlayerById(id, { teamId: null }, (result) => {
 		res.send(result);
 	})
 };
 
-module.exports = { getAllPlayers, createPlayer, removePlayerFromTeam }
+module.exports = { getAllPlayers, createPlayer, updatePlayer, removePlayerFromTeam }
