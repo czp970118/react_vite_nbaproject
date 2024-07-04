@@ -23,6 +23,8 @@ function TeamDetail() {
    const [modalMode, setModalMode] = useState<ModalMode>(ModalModeEnum.CREATE);
    const [playerModalInitValues, setPlayerModalInitValues] = useState<any>({});
 
+   console.log("playerModalInitValues--->", playerModalInitValues);
+
    const getTeamDetail = async (id: number) => {
       setLoading(true);
       const res: any = await http("get", "/api/getTeamDetails", { id });
@@ -59,7 +61,7 @@ function TeamDetail() {
       const res: any = await http("post", api, { ...values, teamId: id });
       const { success, errMsg } = res;
       if (success) {
-         message.success("创建成功");
+         message.success(modalMode === ModalModeEnum.CREATE ? "创建成功" : "编辑成功");
          setCreateModal(false);
          submit();
       } else {

@@ -27,7 +27,11 @@ const PlayerModal = (props: IProps) => {
       form
          .validateFields()
          .then((values) => {
-            onOk(values);
+            const params = values;
+            if (mode === ModalModeEnum.EDIT) {
+               params.id = initValues.id;
+            }
+            onOk(params);
          })
          .catch((err) => {
             console.log("err", err);
@@ -77,7 +81,7 @@ const PlayerModal = (props: IProps) => {
             <Form.Item name="capability" label="能力值">
                <InputNumber min={1} style={{ width: 150 }} />
             </Form.Item>
-            <Form.Item name="describe" label="介绍">
+            <Form.Item name="introduction" label="介绍">
                <Input.TextArea rows={4} />
             </Form.Item>
          </Form>

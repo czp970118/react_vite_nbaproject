@@ -219,5 +219,16 @@ export const AMERICA_CITY_DATA = [
 				"value": "detroit"
 			}
 		]
+	},
+	{
+		"title": "亚利桑那州",
+		"value": "alabama",
+		"selectable": false,
+		"children": [
+			{
+				"title": "凤凰城",
+				"value": "montgomery"
+			}
+		]
 	}
 ]

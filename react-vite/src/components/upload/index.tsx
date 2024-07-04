@@ -20,12 +20,13 @@ const beforeUpload = (file: any) => {
 interface IProps {
    onChange?: (img: string) => void;
    name?: string;
+   value?: string;
 }
 
 const UploadImage = (props: IProps) => {
-   const { onChange } = props;
+   const { onChange, value } = props;
    const [loading, setLoading] = useState<boolean>(false);
-   const [imageUrl, setImageUrl] = useState<string>();
+   const [imageUrl, setImageUrl] = useState<string>(value);
    const [showActions, setShowActions] = useState<boolean>(false);
    const [preview, setPreview] = useState<boolean>(false);
 
@@ -92,7 +93,7 @@ const UploadImage = (props: IProps) => {
             >
                <Image
                   src={imageUrl}
-                  style={{ width: 100, height: 100, borderRadius: 8 }}
+                  style={{ width: 100, height: 100, borderRadius: 8, objectFit: "cover" }}
                   preview={{
                      visible: preview,
                      onVisibleChange: (visible) => {
