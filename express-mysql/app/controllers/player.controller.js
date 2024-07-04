@@ -11,7 +11,7 @@ const getAllPlayers = function (req, res) {
 }
 
 const createPlayer = function (req, res) {
-	const { teamId, number, position, age, describe, name, capability } = req.body;
+	const { teamId, number, position, age, introduction, name, capability } = req.body;
 	PlayerModel.getAllPlayers({ teamId }, (err, result) => {
 		if (err) {
 			res.send(err)
@@ -22,7 +22,7 @@ const createPlayer = function (req, res) {
 					message: '球衣号码已被占用，请选择其他号码'
 				})
 			} else {
-				Player.createPlyer(
+				PlayerModel.createPlyer(
 					{
 						name,
 						teamId,
@@ -30,7 +30,7 @@ const createPlayer = function (req, res) {
 						number,
 						position: position.join(','),
 						capability,
-						describe
+						introduction
 					}, (err, result) => {
 						if (err) {
 							res.send(err)
@@ -47,9 +47,9 @@ const createPlayer = function (req, res) {
 };
 
 const updatePlayer = function (req, res) {
-	const { teamId, number } = req.body;
-	PlayerModel.findPlayer({ teamId, number }, (err, result) => {
-
+	const { teamId, number, id, age, avatar, capability, introduction, name, position } = req.body;
+	PlayerModel.updatePlayerById(id, { teamId, number, age, avatar, capability, name, position, introduction }, result => {
+		res.send(result);
 	})
 }
 
