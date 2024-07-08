@@ -84,7 +84,7 @@ const BaseLayout: React.FC<IProp> = (props: IProp) => {
                      label: "球员管理",
                      children: [
                         {
-                           key: "player/info",
+                           key: "player/center",
                            label: "球员中心",
                            icon: <ContactsOutlined />,
                         },

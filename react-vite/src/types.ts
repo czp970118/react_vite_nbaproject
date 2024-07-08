@@ -12,8 +12,8 @@ export interface TeamItem {
 }
 
 export interface TableParams {
-	current: number;
-	pageSize: number;
+	current?: number;
+	pageSize?: number;
 }
 
 export type ModalMode = 'create' | 'edit';

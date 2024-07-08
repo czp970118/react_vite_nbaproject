@@ -6,7 +6,7 @@ import BaseLayout from "./components/layout";
 import TeamCenter from "./pages/team/team-enter";
 import PlayerCards from "./pages/player/player-cards";
 import UserInfo from "./pages/user-info";
-import PlayerInfo from "./pages/player/player-info";
+import PlayerCenter from "./pages/player/player-center";
 import TeamCreate from "./pages/team/team-create";
 import ContextStudy from "./pages/study/context-study";
 import TeamDetail from "./pages/team/team-detail";
@@ -26,7 +26,7 @@ function App() {
                      <Route path="team/create" element={<TeamCreate />} />
                      <Route path="player/cards" element={<PlayerCards />} />
                      <Route path="user/info" element={<UserInfo />} />
-                     <Route path="player/info" element={<PlayerInfo />} />
+                     <Route path="player/center" element={<PlayerCenter />} />
                      <Route path="study/context" element={<ContextStudy />} />
                   </Routes>
                </BaseLayout>
