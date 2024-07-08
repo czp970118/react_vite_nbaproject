@@ -7,6 +7,7 @@ import { TeamItem, TableParams, ModalMode } from "@/types";
 import { ParttitionEnum, ModalModeEnum } from "@/enum";
 import { useAntdTable } from "ahooks";
 import HeadFilter from "@/components/head-filter";
+import TeamChart from "@/components/team-chart";
 import { PositionEnum } from "@/constan";
 
 import "./index.scss";
@@ -220,6 +221,9 @@ function TeamDetail() {
                               </span>
                            </div>
                         </div>
+                     </div>
+                     <div className="team-chart-wrap">
+                        <TeamChart />
                      </div>
                   </div>
                   <div className="team-player-table">
