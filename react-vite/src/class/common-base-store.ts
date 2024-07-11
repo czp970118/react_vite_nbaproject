@@ -1,10 +1,10 @@
 import { getUserInfo } from '@/request/api/user';
 
-
 interface UserInfo {
 	avatar: string;
 	userId: number;
 	userName: string;
+	id: number
 }
 
 class CommonBaseStore {

@@ -1,6 +1,4 @@
 import { ParttitionEnum } from "@/enum";
-
-
 export interface TeamItem {
 	city: string;
 	teamId: number;
@@ -17,3 +15,10 @@ export interface TableParams {
 }
 
 export type ModalMode = 'create' | 'edit';
+
+export enum TeamCenterKeyEnum {
+	ALL = 'all',
+	MY = 'my'
+}
+
+export type TabKey = "all" | "my";

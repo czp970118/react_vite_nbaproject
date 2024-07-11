@@ -10,7 +10,6 @@ const getUser = async () => {
 	}
 }
 
-
 export const propsReducer = (props: any, action: any) => {
 
 	switch (action.type) {

@@ -14,7 +14,6 @@ import "./App.css";
 
 function App() {
    const baseStore = useContext(BaseStoreContext);
-
    return (
       <UserRedirect>
          <BaseStoreContext.Provider value={baseStore}>

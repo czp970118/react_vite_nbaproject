@@ -11,9 +11,14 @@
 	width: 80%;
 	height: auto;
 }
-.header{
+
+.header {
 	display: flex;
 	justify-content: space-between;
 	padding-right: 48px !important;
 	align-items: center;
+}
+
+section {
+	height: fit-content;
 }

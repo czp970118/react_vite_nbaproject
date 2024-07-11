@@ -6,15 +6,15 @@ import "./index.scss";
 export default () => {
    // 数据源
    const data = [
-      { year: "2016", value: 73 },
-      { year: "2017", value: 65 },
-      { year: "2018", value: 56 },
-      { year: "2019", value: 55 },
-      { year: "2020", value: 42 },
-      { year: "2021", value: 54 },
-      { year: "2022", value: 50 },
-      { year: "2023", value: 49 },
-      { year: "2024", value: 47 },
+      { year: "2016", win: 73, lose: 10 },
+      { year: "2017", win: 65, lose: 18 },
+      { year: "2018", win: 56, lose: 27 },
+      { year: "2019", win: 55, lose: 28 },
+      { year: "2020", win: 42, lose: 40 },
+      { year: "2021", win: 54, lose: 29 },
+      { year: "2022", win: 50, lose: 33 },
+      { year: "2023", win: 49, lose: 34 },
+      { year: "2024", win: 47, lose: 36 },
    ];
 
    return (
@@ -28,7 +28,7 @@ export default () => {
                text: "战绩统计",
             }}
             xField="year"
-            yField="value"
+            yField="win"
             interactions={[
                {
                   type: "slider",
