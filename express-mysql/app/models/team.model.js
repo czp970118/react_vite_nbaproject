@@ -10,7 +10,6 @@ class TeamModel {
 		const start = (pageNum - 1) * pageSize;
 		try {
 			sql.query(`SELECT * FROM team limit ${pageSize} OFFSET ${start}`, (err, team) => {
-				console.log('team--->', team)
 				sql.query("SELECT count(*) totalCount from team", (totalErr, totalRes) => {
 					if (err) {
 						result(null, err);

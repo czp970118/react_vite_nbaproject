@@ -10,7 +10,17 @@ User.login = ({ userName, userPassword }, result) => {
 			return;
 		}
 		if (res.length) {
-			result(null, { success: true, msg: '', code: 200 });
+			result(null, {
+				success: true,
+				msg: '',
+				code: 200,
+				user: {
+					userId: res[0].id,
+					userName: res[0].userName,
+					avatar: res[0].avatar,
+					role: res[0].role
+				}
+			});
 		} else {
 			result(null, { success: false, msg: '用户名或密码错误!', code: 450 })
 		}
@@ -21,10 +31,14 @@ User.register = async ({ userName, userPassword }, result) => {
 	try {
 		sql.query('select * from user where userName=?', [userName], (err, res) => {
 			if (!res || res.length === 0) {
-				sql.query('insert into user value (?,?,?)', [0, userName, userPassword]);
-				result(null, { success: true, code: 0, msg: '注册成功!' })
+				sql.query(`INSERT INTO user (userName, userPassword) VALUES (?, ?)`, [userName, userPassword], (error, r) => {
+					if (error) {
+						return result({ success: false, message: error.sqlMessage })
+					}
+					result({ success: true, code: 0, msg: '注册成功!' })
+				});
 			} else {
-				result(null, { success: false, code: 1, msg: '用户名重复!' })
+				result({ success: false, code: 1, msg: '用户名重复!' })
 			}
 		})
 	} catch (err) {
@@ -32,9 +46,9 @@ User.register = async ({ userName, userPassword }, result) => {
 	}
 }
 
-User.getUserInfo = async (userName, result) => {
+User.getUserInfo = async (userId, result) => {
 	try {
-		sql.query('select * from user where userName=?', [userName], (error, res) => {
+		sql.query('select * from user where id=?', [userId], (error, res) => {
 			if (error) result(error, { success: false });
 			if (res.length) {
 				result(res[0], null)

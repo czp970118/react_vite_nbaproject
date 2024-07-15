@@ -21,18 +21,14 @@ exports.login = (req, res) => {
 
 exports.register = (req, res) => {
 	const { userName, userPassword } = req.body;
-	User.register({ userName, userPassword }, (err, data) => {
-		if (err) {
-			res.status(404).send({})
-		} else {
-			res.send(data);
-		}
+	User.register({ userName, userPassword }, (data) => {
+		res.send(data);
 	})
 }
 
 exports.getUserInfo = (req, res) => {
-	const { userName } = req.query;
-	User.getUserInfo(userName, (result, error) => {
+	const { userId } = req.query;
+	User.getUserInfo(userId, (result, error) => {
 		if (error) {
 			res.status(404).send({})
 		} else {
