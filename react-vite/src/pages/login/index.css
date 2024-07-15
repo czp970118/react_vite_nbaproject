@@ -1,5 +1,6 @@
 .login-wrap {
-	height: 100vh;
+	height: 100%;
+	min-height: 100vh;
 	width: 100vw;
 	background-color: #21509f;
 	display: flex;
@@ -14,25 +15,30 @@
 .logo {
 	height: auto;
 }
-.login-form{
+
+.login-form {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	margin-top: 20px;
 }
-.rember-pass{
+
+.rember-pass {
 	align-self: flex-start;
 	margin-bottom: 12px;
 	margin-left: 44px;
 	color: #fff;
 }
-.form-item{
+
+.form-item {
 	margin-bottom: 12px;
 }
-.form-text{
+
+.form-text {
 	color: #fff;
 	margin-right: 6px;
 }
-.ant-form-item-required{
+
+.ant-form-item-required {
 	color: #fff !important;
 }

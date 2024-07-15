@@ -14,7 +14,7 @@ function register({ userName, userPassword }: LoginParams) {
 }
 
 function getUserInfo(userName: string) {
-	return http('get', '/api/getuserInfo', { userName })
+	return http('get', '/api/getUserInfo', { userName })
 }
 
 export { login, register, getUserInfo };

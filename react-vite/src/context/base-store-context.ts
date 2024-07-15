@@ -4,8 +4,8 @@ import { getCookie } from '@/utils'
 
 const loginStatus = getCookie('loginStatus');
 const loginSubject = loginStatus ? JSON.parse(loginStatus) : {}
-const { userName } = loginSubject;
+const { userId } = loginSubject;
 
-const BaseStoreContext = createContext(new CommonBaseStore(userName));
+const BaseStoreContext = createContext(new CommonBaseStore(userId));
 
 export default BaseStoreContext;

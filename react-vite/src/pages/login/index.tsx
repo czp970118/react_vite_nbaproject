@@ -28,6 +28,7 @@ function Login() {
       setLoading(true);
       const res: any = await login(values);
       const { success, msg } = res;
+      console.log("loginRes---->", res);
       if (success) {
          message.success("登陆成功!");
          setCookie("loginStatus", JSON.stringify({ userName: values.userName, status: success }));

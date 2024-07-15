@@ -9,9 +9,9 @@ interface UserInfo {
 
 class CommonBaseStore {
 	userInfo: UserInfo | undefined;
-	constructor(userName: string) {
-		if (userName) {
-			getUserInfo(userName).then((res: any) => {
+	constructor(userId: string) {
+		if (userId) {
+			getUserInfo(userId).then((res: any) => {
 				const { success, user } = res;
 				if (success) {
 					this.userInfo = user;
