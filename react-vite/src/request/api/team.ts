@@ -1,6 +1,5 @@
 import http from '../http';
 function getAllTeams(params) {
-	console.log('params--->', params);
 	return http('get', '/api/getAllTeams', params)
 }
 

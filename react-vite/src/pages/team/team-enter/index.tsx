@@ -11,6 +11,7 @@ function TeamCenter() {
    const baseStore = useContext(BaseStoreContext);
    const { userInfo } = baseStore || {};
    const { id: userId } = userInfo || {};
+   const [form] = Form.useForm();
    const [activeKey, setActiveKey] = useState<TabKey>(TeamCenterKeyEnum.ALL);
    const [dataSource, setDataSource] = useState<TeamItem[]>();
    const [current, setCurrent] = useState<number>(1);
@@ -22,13 +23,16 @@ function TeamCenter() {
       setActiveKey(key as TabKey);
    };
 
-   const getTeamList = async () => {
-      const params = {
+   const getTeamList = async (formValues?: any) => {
+      let params = {
          pageSize,
          pageNum: current,
-         teamScope: activeKey,
-         userId,
+         ...formValues,
       };
+      if (activeKey === TeamCenterKeyEnum.MY) {
+         params.userId = userId;
+      }
+      console.log("params--->", params);
       setSpinning(true);
       const res: any = await getAllTeams(params);
       const { success, data } = res;
@@ -39,6 +43,12 @@ function TeamCenter() {
          setDataSource([]);
       }
       setSpinning(false);
+   };
+
+   const onSearch = () => {
+      const currentFormValues = form.getFieldsValue();
+      setCurrent(1);
+      getTeamList(currentFormValues);
    };
 
    useEffect(() => {
@@ -52,33 +62,31 @@ function TeamCenter() {
             activeKey={activeKey}
             onChange={onTabChange}
             tabBarExtraContent={
-               <div className="team-center-filter">
-                  <div className="filter-items">
-                     <FormItem label="分区" name="partition" style={{ marginRight: 12 }}>
-                        <Select
-                           style={{ width: 200 }}
-                           options={PARTTITION_DATA}
-                           placeholder="All"
-                           allowClear
-                        />
-                     </FormItem>
-                     <FormItem label="球队名称" name="teamName">
-                        <Input placeholder="请输入球队名称" style={{ width: 200 }} />
-                     </FormItem>
-                  </div>
+               <Form className="team-center-filter" form={form}>
+                  <FormItem label="分区" name="partition" style={{ marginRight: 12 }}>
+                     <Select
+                        style={{ width: 200 }}
+                        options={PARTTITION_DATA}
+                        placeholder="All"
+                        allowClear
+                     />
+                  </FormItem>
+                  <FormItem label="球队名称" name="teamName">
+                     <Input placeholder="请输入球队名称" style={{ width: 200 }} />
+                  </FormItem>
                   <FormItem>
-                     <Button
-                        type="primary"
-                        style={{ marginRight: 12 }}
-                        onClick={() => {
-                           // onFilter();
-                        }}
-                     >
+                     <Button type="primary" className="search-btn" onClick={onSearch}>
                         Search
                      </Button>
-                     <Button>Reset</Button>
+                     <Button
+                        onClick={() => {
+                           form.resetFields();
+                        }}
+                     >
+                        Reset
+                     </Button>
                   </FormItem>
-               </div>
+               </Form>
             }
          >
             <Tabs.TabPane key={TeamCenterKeyEnum.ALL} tab="所有球队" />

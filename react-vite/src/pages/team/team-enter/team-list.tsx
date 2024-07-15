@@ -1,17 +1,21 @@
 import { Empty, Typography, Button } from "antd";
 import TeamCard from "@/components/team-card";
 import { TeamItem } from "@/types";
+import { useNavigate } from "react-router-dom";
 import "./index.scss";
 
 interface IProps {
    dataSource?: TeamItem[];
-   onCreate: () => void;
-   onCardClick: (id: number) => void;
-   onFilter: (values?: any) => void;
+   onCreate?: () => void;
 }
 
 export default (props: IProps) => {
-   const { dataSource, onCreate, onCardClick, onFilter } = props;
+   const { dataSource, onCreate } = props;
+   const navigate = useNavigate();
+
+   const onCardClick = (teamId: number) => {
+      navigate(`/pages/team/detail/${teamId}`);
+   };
 
    return (
       <div className="team-wrap">
