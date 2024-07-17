@@ -28,10 +28,16 @@ function Login() {
       setLoading(true);
       const res: any = await login(values);
       const { success, msg } = res;
-      console.log("loginRes---->", res);
       if (success) {
          message.success("登陆成功!");
-         setCookie("loginStatus", JSON.stringify({ userName: values.userName, status: success }));
+         setCookie(
+            "userStatus",
+            JSON.stringify({
+               userName: res.user.userName,
+               userId: res.user.userId,
+               status: success,
+            })
+         );
          setTimeout(() => {
             navigate("/pages/team/center");
          }, 300);

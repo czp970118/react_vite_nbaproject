@@ -13,8 +13,8 @@ function register({ userName, userPassword }: LoginParams) {
 	return http('post', '/api/register', { userName, userPassword })
 }
 
-function getUserInfo(userName: string) {
-	return http('get', '/api/getUserInfo', { userName })
+function getUserInfo(userId: string | number) {
+	return http('get', '/api/getUserInfo', { userId })
 }
 
 export { login, register, getUserInfo };

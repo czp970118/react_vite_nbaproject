@@ -1,20 +1,31 @@
-import React, { useEffect, useState } from "react";
-import { getUserInfo } from "../../request/api/user";
+import React, { useContext, useState, useEffect } from "react";
+import BaseStoreContext from "@/context/base-store-context";
+import UploadImage from "@/components/upload";
+import { Form, Input } from "antd";
 
 import "./index.scss";
 
 function UserInfo() {
-   const [userInfo, setUserInfo] = useState();
-
-   // const get
+   const baseStore = useContext(BaseStoreContext);
+   const { userInfo } = baseStore || {};
+   const [disabled, setDisabled] = useState<boolean>(true);
+   const [form] = Form.useForm();
+   console.log("userInfo----->", userInfo);
 
    useEffect(() => {
-      getUserInfo("czp").then((res) => {
-         console.log("res==>", res);
-      });
-   }, []);
+      form.setFieldsValue(userInfo);
+   }, [userInfo]);
 
-   return <div>UserInfo</div>;
+   return (
+      <Form form={form} initialValues={{ ...userInfo }}>
+         <Form.Item>
+            <UploadImage />
+         </Form.Item>
+         <Form.Item label="账号" name="userName">
+            <Input disabled={disabled} />
+         </Form.Item>
+      </Form>
+   );
 }
 
 export default UserInfo;

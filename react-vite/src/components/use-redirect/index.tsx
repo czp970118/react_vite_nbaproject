@@ -7,11 +7,10 @@ interface IProps {
 }
 
 const UserRedirect = (props: IProps) => {
-   const loginStatus = getCookie("loginStatus");
-   const loginSubject = loginStatus ? JSON.parse(loginStatus) : {};
+   const userStatus = getCookie("userStatus");
+   const loginSubject = userStatus ? JSON.parse(userStatus) : {};
 
    const { status } = loginSubject || {};
-   console.log("status", status);
    if (!status) {
       return <Navigate to="/" />;
    }

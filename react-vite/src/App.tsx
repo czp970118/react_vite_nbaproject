@@ -1,5 +1,7 @@
-import { useContext } from "react";
+import { useEffect, useState } from "react";
 import BaseStoreContext from "./context/base-store-context";
+import { getCookie } from "@/utils";
+import CommonBaseStore from "@/class/common-base-store";
 import { Route, Routes } from "react-router-dom";
 import UserRedirect from "./components/use-redirect";
 import BaseLayout from "./components/layout";
@@ -13,7 +15,19 @@ import TeamDetail from "./pages/team/team-detail";
 import "./App.css";
 
 function App() {
-   const baseStore = useContext(BaseStoreContext);
+   const [baseStore, setBaseStore] = useState<CommonBaseStore | null>(null);
+
+   useEffect(() => {
+      const userStorage = getCookie("userStatus");
+      const userStatus = userStorage ? JSON.parse(userStorage) : {};
+      const { userId } = userStatus;
+      const loadBaseStore = async () => {
+         const store = new CommonBaseStore(userId);
+         await store.loadUserInfo();
+         setBaseStore(store);
+      };
+      loadBaseStore();
+   }, []);
    return (
       <UserRedirect>
          <BaseStoreContext.Provider value={baseStore}>

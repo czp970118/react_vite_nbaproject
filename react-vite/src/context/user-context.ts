@@ -2,7 +2,6 @@ import { createContext } from "react";
 import { getUserInfo } from "../request/api/user";
 
 const UserInfo = async () => {
-	console.log('执行了')
 	const userStorage = localStorage.getItem('userInfo');
 	const userInfo = userStorage ? JSON.parse(userStorage) : {};
 	const { userName } = userInfo;

@@ -2,8 +2,8 @@ import { createContext } from 'react';
 import CommonBaseStore from '@/class/common-base-store';
 import { getCookie } from '@/utils'
 
-const loginStatus = getCookie('loginStatus');
-const loginSubject = loginStatus ? JSON.parse(loginStatus) : {}
+const userStatus = getCookie('userStatus');
+const loginSubject = userStatus ? JSON.parse(userStatus) : {}
 const { userId } = loginSubject;
 
 const BaseStoreContext = createContext(new CommonBaseStore(userId));

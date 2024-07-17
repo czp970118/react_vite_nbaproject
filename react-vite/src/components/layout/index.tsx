@@ -45,7 +45,7 @@ const BaseLayout: React.FC<IProp> = (props: IProp) => {
          label: "退出登陆",
          key: "3",
          onClick: () => {
-            clearCookie("loginStatus");
+            clearCookie("userStatus");
             navigate("/");
          },
       },

@@ -27,8 +27,12 @@ export default (props: IProps) => {
                   </div> */}
                {dataSource.map((item) => {
                   return (
-                     <div className="card-wrap" onClick={() => onCardClick(item.teamId)}>
-                        <TeamCard key={item.teamId} item={item} />
+                     <div
+                        className="card-wrap"
+                        key={item.teamId}
+                        onClick={() => onCardClick(item.teamId)}
+                     >
+                        <TeamCard item={item} />
                      </div>
                   );
                })}

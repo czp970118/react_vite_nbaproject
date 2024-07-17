@@ -8,16 +8,37 @@ interface UserInfo {
 }
 
 class CommonBaseStore {
-	userInfo: UserInfo | undefined;
+
+	private _userInfo?: UserInfo;
+	private _loading: boolean = false;
+	private _userId: string | number;
+
 	constructor(userId: string) {
-		if (userId) {
-			getUserInfo(userId).then((res: any) => {
-				const { success, user } = res;
-				if (success) {
-					this.userInfo = user;
-				}
-			})
+		this._userId = userId;
+		this._loading = false;
+	}
+
+	public get userInfo(): UserInfo | undefined {
+		return this._userInfo;
+	}
+
+	public get loading(): boolean {
+		return this._loading;
+	}
+
+	public loadUserInfo = async () => {
+		if (this._loading) return
+		try {
+			this._loading = true;
+			const res = await getUserInfo(this._userId)
+			const { success, user } = res;
+			if (success) {
+				this._userInfo = user;
+			}
+		} catch (error) {
+			console.error('Failed to load user info:', error);
 		}
+		this._loading = false;
 	}
 }
 
