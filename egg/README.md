@@ -29,3 +29,6 @@ npm stop
 - Use `npm test` to run unit test.
 
 [egg]: https://eggjs.org
+
+### Documentation
+*** controller不会自己产出数据，也不会包含复杂的逻辑。 复杂的逻辑应该抽象为业务的server层
