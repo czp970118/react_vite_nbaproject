@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Upload, message, Image } from "antd";
 import { LoadingOutlined, PlusOutlined, DeleteOutlined, EyeOutlined } from "@ant-design/icons";
 
@@ -21,10 +21,12 @@ interface IProps {
    onChange?: (img: string) => void;
    name?: string;
    value?: string;
+   style?: React.CSSProperties;
+   disabled?: boolean;
 }
 
 const UploadImage = (props: IProps) => {
-   const { onChange, value } = props;
+   const { onChange, value, disabled } = props;
    const [loading, setLoading] = useState<boolean>(false);
    const [imageUrl, setImageUrl] = useState<string>(value);
    const [showActions, setShowActions] = useState<boolean>(false);
@@ -80,6 +82,7 @@ const UploadImage = (props: IProps) => {
          className="avatar-uploader"
          accept="image"
          openFileDialogOnClick={!imageUrl}
+         disabled={disabled}
       >
          {imageUrl ? (
             <div

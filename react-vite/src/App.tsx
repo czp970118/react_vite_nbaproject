@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import BaseStoreContext from "./context/base-store-context";
 import { getCookie } from "@/utils";
+import { Spin } from "antd";
 import CommonBaseStore from "@/class/common-base-store";
 import { Route, Routes } from "react-router-dom";
 import UserRedirect from "./components/use-redirect";
@@ -16,18 +17,25 @@ import "./App.css";
 
 function App() {
    const [baseStore, setBaseStore] = useState<CommonBaseStore | null>(null);
+   const [loading, setLoading] = useState<boolean>(true);
 
    useEffect(() => {
       const userStorage = getCookie("userStatus");
       const userStatus = userStorage ? JSON.parse(userStorage) : {};
       const { userId } = userStatus;
       const loadBaseStore = async () => {
+         setLoading(true);
          const store = new CommonBaseStore(userId);
          await store.loadUserInfo();
          setBaseStore(store);
+         setLoading(false);
       };
       loadBaseStore();
    }, []);
+
+   if (loading) {
+      return <Spin spinning={loading} />;
+   }
    return (
       <UserRedirect>
          <BaseStoreContext.Provider value={baseStore}>

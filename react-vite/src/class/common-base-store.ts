@@ -10,7 +10,7 @@ interface UserInfo {
 class CommonBaseStore {
 
 	private _userInfo?: UserInfo;
-	private _loading: boolean = false;
+	public _loading: boolean = false;
 	private _userId: string | number;
 
 	constructor(userId: string) {

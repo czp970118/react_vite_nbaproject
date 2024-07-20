@@ -11,4 +11,15 @@ function createTeam(teamData) {
 	return http('post', '/api/createTeam', teamData)
 }
 
-export { getAllTeams, queryTeamDetail, createTeam };
+
+type TeamsWiothoutUserParams = {
+	userId?: number;
+	pageSize: number;
+	pageNum: number;
+}
+
+function getTeamsWithoutUserId(params: TeamsWiothoutUserParams) {
+	return http('get', '/api/getTeamsWithoutUserId', params)
+}
+
+export { getAllTeams, queryTeamDetail, createTeam, getTeamsWithoutUserId };
