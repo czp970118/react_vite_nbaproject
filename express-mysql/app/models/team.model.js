@@ -1,6 +1,7 @@
 const sql = require('./db.js');
 const { generateInsertSql } = require('../utils');
 
+
 class TeamModel {
 	constructor() {
 	}
@@ -75,6 +76,10 @@ class TeamModel {
 		} catch (err) {
 			result(err, null);
 		}
+	}
+
+	getTeamsWithoutUserId(userId, result) {
+		// const userResult = 
 	}
 }
 

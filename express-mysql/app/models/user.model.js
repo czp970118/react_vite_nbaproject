@@ -49,9 +49,6 @@ User.register = async ({ userName, userPassword }, result) => {
 User.getUserInfo = async (userId, result) => {
 	try {
 		sql.query('select * from user where id=?', [userId], (error, res) => {
-			console.log('userId----->', userId);
-			console.log('getUserInfoerror----->', error);
-			console.log('getUserInfores----->', res);
 			if (error) result(error, { success: false });
 			if (res.length) {
 				result(res[0], null)
