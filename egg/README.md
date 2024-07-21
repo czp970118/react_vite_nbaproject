@@ -32,3 +32,8 @@ npm stop
 
 ### Documentation
 *** controller不会自己产出数据，也不会包含复杂的逻辑。 复杂的逻辑应该抽象为业务的server层
+
+### 设置CORS（跨源资源共享）
+
+*** 1.按照egg-cors插件
+*** 2.启用egg-cors插件

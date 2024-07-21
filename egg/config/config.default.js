@@ -41,6 +41,28 @@ module.exports = appInfo => {
     serverUrl: 'https://hacker-news.firebaseio.com/v0',
   }
 
+  config.cors = {
+    origin: (ctx) => {
+      if (ctx.header.origin === 'http://localhost:5173') {
+        return ctx.header.origin; // 只允许来自指定域名的请求
+      }
+      return null; // 其他域名请求不允许
+    },
+    allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH',
+    credentials: true, // 允许携带cookie
+  }
+
+  config.security = {
+    csrf: {
+      enable: false
+    },
+    domainWhiteList: ['http://localhost:5173']
+  }
+
+  config.jwt = {
+    secret: config.keys, // JWT 的密钥，用于签名和验证 token
+    enable: true,
+  }
   // add your middleware config here
   config.middleware = [];
 
