@@ -6,7 +6,6 @@ axios.defaults.timeout = 5000;
 
 // 设置baseUrl
 axios.defaults.baseURL = 'http://localhost:8081';
-
 /**
  * http request拦截器
  */
@@ -67,8 +66,6 @@ export function get(url: string, params = {}) {
  * @returns {Promise}
  */
 export function post(url: string, data: any) {
-	console.log('url', url);
-	console.log('data', data)
 	return new Promise((resolve, reject) => {
 		axios.post(url, data).then((response) => {
 			console.log('response', response);
@@ -84,7 +81,6 @@ export default function (fecth, url, param) {
 	return new Promise((resolve, reject) => {
 		switch (fecth) {
 			case "get":
-				console.log("begin a get request,and url:", url);
 				get(url, param)
 					.then(function (response) {
 						resolve(response);
@@ -100,7 +96,6 @@ export default function (fecth, url, param) {
 						resolve(response);
 					})
 					.catch(function (error) {
-						console.log("get request POST failed.", error);
 						reject(error);
 					});
 				break;
