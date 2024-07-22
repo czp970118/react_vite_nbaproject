@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import {
    MenuFoldOutlined,
@@ -11,6 +11,7 @@ import {
    ContactsOutlined,
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
+import BaseStoreContext from "@/context/base-store-context";
 import { Layout, Menu, Button, theme, Avatar, Dropdown } from "antd";
 import nablogo from "../../assets/nbalogo.jpg";
 import { clearCookie } from "../../utils";
@@ -22,6 +23,9 @@ interface IProp {
    children: any;
 }
 const BaseLayout: React.FC<IProp> = (props: IProp) => {
+   const baseStore = useContext(BaseStoreContext);
+   const { userInfo } = baseStore || {};
+   console.log("顶部的userInfo", userInfo);
    const { children } = props;
    const [collapsed, setCollapsed] = useState(false);
    const navigate = useNavigate();
@@ -128,7 +132,7 @@ const BaseLayout: React.FC<IProp> = (props: IProp) => {
                   }}
                />
                <Dropdown menu={{ items: dropdownItems }} className="menu">
-                  <Avatar size={48} icon={<UserOutlined />} />
+                  <Avatar size={48} icon={<UserOutlined />} src={userInfo?.avatar} />
                </Dropdown>
             </Header>
             <Content

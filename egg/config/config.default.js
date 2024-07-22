@@ -59,10 +59,7 @@ module.exports = appInfo => {
     domainWhiteList: ['http://localhost:5173']
   }
 
-  config.jwt = {
-    secret: config.keys, // JWT 的密钥，用于签名和验证 token
-    enable: true,
-  }
+
   // add your middleware config here
   config.middleware = [];
 

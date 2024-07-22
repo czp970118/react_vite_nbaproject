@@ -21,6 +21,20 @@ class UserController extends Controller {
 			};
 		}
 	}
+
+	async userEdit() {
+		const ctx = this.ctx;
+		const params = ctx.request.body;
+		try {
+			const res = await this.ctx.service.user.edit(params);
+			ctx.body = res;
+		} catch (error) {
+			ctx.body = {
+				success: false,
+				message: err.message,
+			};
+		}
+	}
 }
 
 module.exports = UserController;

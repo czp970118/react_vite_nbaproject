@@ -18,4 +18,8 @@ function getUserInfo(userId: string | number) {
 	return http('get', `${userBaseUrl}/user/getUserInfo`, { userId })
 }
 
-export { login, register, getUserInfo };
+function editUser(params: any) {
+	return http('post', `${userBaseUrl}/user/edit`, params)
+}
+
+export { login, register, getUserInfo, editUser };

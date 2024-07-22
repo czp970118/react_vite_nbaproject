@@ -97,14 +97,18 @@ const UploadImage = (props: IProps) => {
                <Image
                   src={imageUrl}
                   style={{ width: 100, height: 100, borderRadius: 8, objectFit: "cover" }}
-                  preview={{
-                     visible: preview,
-                     onVisibleChange: (visible) => {
-                        setPreview(visible);
-                     },
-                  }}
+                  preview={
+                     !disabled
+                        ? {
+                             visible: preview,
+                             onVisibleChange: (visible) => {
+                                setPreview(visible);
+                             },
+                          }
+                        : false
+                  }
                />
-               {showActions ? (
+               {showActions && !disabled ? (
                   <div className="image-actions">
                      <span className="action-item" onClick={onPreview}>
                         <EyeOutlined style={{ fontSize: 16, color: "#fff" }} />

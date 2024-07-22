@@ -22,7 +22,7 @@ class UserService extends Service {
 			return {
 				success: false,
 				message: '用户名或密码错误',
-				token: null
+				// token: null
 			}
 		}
 		return {
@@ -34,13 +34,28 @@ class UserService extends Service {
 				avatar: user.avatar,
 				role: user.role
 			},
-			// token: this.app.jwt.sign({
-			// 	id: user.id,
-			// 	userName: user.userName,
-			// 	userPassword: user.userPassword
-			// }, this.app.config.jwt.secret, {
-			// 	expiresIn: '1d'
-			// })
+		}
+	}
+
+	async edit(params) {
+		const user = await this.app.mysql.update('user', params);
+		if (!user) {
+			return {
+				success: false,
+				message: '更新失败',
+			}
+		} else {
+			const newUser = await this.app.mysql.get('user', { id: params.id });
+			return {
+				success: true,
+				message: '更新成功',
+				user: {
+					userId: newUser.id,
+					userName: newUser.userName,
+					avatar: newUser.avatar,
+					role: newUser.role
+				}
+			}
 		}
 	}
 }
