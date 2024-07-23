@@ -7,6 +7,7 @@ export interface TeamItem {
 	logo: string;
 	manager: string;
 	homeArena: string;
+	favor?: boolean;
 }
 
 export interface TableParams {

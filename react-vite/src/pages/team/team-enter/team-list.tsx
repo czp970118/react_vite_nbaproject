@@ -1,7 +1,10 @@
+import { useContext } from "react";
 import { Empty, Typography, Button } from "antd";
+import BaseStoreContext from "@/context/base-store-context";
 import TeamCard from "@/components/team-card";
 import { TeamItem } from "@/types";
 import { useNavigate } from "react-router-dom";
+import { favoriteTeams } from "@/request/api/team";
 import "./index.scss";
 
 interface IProps {
@@ -12,9 +15,17 @@ interface IProps {
 export default (props: IProps) => {
    const { dataSource, onCreate } = props;
    const navigate = useNavigate();
+   const baseStore = useContext(BaseStoreContext);
+   const { userInfo } = baseStore || {};
+   const { id: userId } = userInfo || {};
 
-   const onCardClick = (teamId: number) => {
+   const onEditClick = (teamId: number) => {
       navigate(`/pages/team/detail/${teamId}`);
+   };
+
+   const onFavorClick = async (teamId: number, favor: boolean) => {
+      const res = await favoriteTeams({ teamId: String(teamId), favor, userId });
+      console.log("res--->", res);
    };
 
    return (
@@ -27,12 +38,8 @@ export default (props: IProps) => {
                   </div> */}
                {dataSource.map((item) => {
                   return (
-                     <div
-                        className="card-wrap"
-                        key={item.teamId}
-                        onClick={() => onCardClick(item.teamId)}
-                     >
-                        <TeamCard item={item} />
+                     <div className="card-wrap" key={item.teamId}>
+                        <TeamCard item={item} onEdit={onEditClick} onFavor={onFavorClick} />
                      </div>
                   );
                })}

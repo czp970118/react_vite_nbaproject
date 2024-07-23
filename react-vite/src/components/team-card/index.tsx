@@ -1,14 +1,17 @@
 import React from "react";
 import { Card } from "antd";
+import { EditOutlined, HeartOutlined } from "@ant-design/icons";
 import { TeamItem } from "../../types";
 
 interface IProps {
    item: TeamItem;
+   onEdit: (id: number) => void;
+   onFavor: (id: number, favor: boolean) => void;
 }
 const { Meta } = Card;
 
 const TeamCard = (props: IProps) => {
-   const { item } = props;
+   const { item, onEdit, onFavor } = props;
 
    return (
       <Card
@@ -17,6 +20,19 @@ const TeamCard = (props: IProps) => {
          cover={
             <img alt="example" style={{ maxHeight: 120, objectFit: "cover" }} src={item.logo} />
          }
+         actions={[
+            <EditOutlined
+               key="edit"
+               onClick={() => {
+                  onEdit(item.teamId);
+               }}
+            />,
+            <HeartOutlined
+               onClick={() => {
+                  onFavor(item.teamId, !item.favor);
+               }}
+            />,
+         ]}
       >
          <Meta
             title={item?.teamName}

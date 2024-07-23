@@ -1,7 +1,7 @@
 import { useContext, useState, useEffect } from "react";
 import BaseStoreContext from "@/context/base-store-context";
 import UploadImage from "@/components/upload";
-import { Form, Input, Select, Space, Button, message, Spin } from "antd";
+import { Form, Input, Space, Button, message, Spin } from "antd";
 import { editUser } from "@/request/api/user";
 
 import "./index.scss";
@@ -16,8 +16,6 @@ function UserInfo() {
    const { userInfo } = baseStore || {};
    const [disabled, setDisabled] = useState<boolean>(true);
    const [loading, setLoading] = useState<boolean>(false);
-   const [pageSize, setPageSize] = useState<number>(1);
-   const [pageNum, setPageNum] = useState<number>(10);
    const [form] = Form.useForm();
 
    useEffect(() => {
@@ -33,7 +31,6 @@ function UserInfo() {
       };
       setLoading(true);
       const res: any = await editUser(params);
-      console.log("res--->", res);
       if (res?.success) {
          message.success("保存成功");
          setDisabled(true);
@@ -58,10 +55,6 @@ function UserInfo() {
             </Form.Item>
             <Form.Item label="当前角色" name="role">
                <Input disabled={disabled} />
-            </Form.Item>
-            <Form.Item label="已收藏球队"></Form.Item>
-            <Form.Item label="收藏球队">
-               <Select />
             </Form.Item>
             <Form.Item wrapperCol={{ span: 7, offset: 17 }}>
                <Space>
