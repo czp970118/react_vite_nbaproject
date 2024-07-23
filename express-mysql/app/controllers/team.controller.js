@@ -36,9 +36,20 @@ exports.createTeam = (req, res) => {
 
 exports.getTeamsWithoutUserId = (req, res) => {
 	const params = req.query;
-	console.log('query--->', params)
 	const { userId } = params;
 	teamInstance.getTeamsWithoutUserId(userId, (err, result) => {
+		if (err) {
+			res.send(err)
+		} else {
+			res.send(result);
+		}
+	});
+}
+
+exports.favoriteTeams = (req, res) => {
+	const data = req.body;
+	console.log('data---->', data);
+	teamInstance.favoriteTeams(data, (err, result) => {
 		if (err) {
 			res.send(err)
 		} else {

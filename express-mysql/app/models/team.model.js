@@ -1,6 +1,6 @@
 const sql = require('./db.js');
 const { generateInsertSql } = require('../utils');
-
+const axios = require('axios');
 
 class TeamModel {
 	constructor() {
@@ -80,6 +80,13 @@ class TeamModel {
 
 	getTeamsWithoutUserId(userId, result) {
 		// const userResult = 
+	}
+	favoriteTeams(params, result) {
+		const { userId } = params;
+		axios.get(`http://127.0.0.1:7001/user/getUserInfo?userId=${userId}`).then((res) => {
+			console.log('res--->', res.data);
+			result(null, { success: true, msg: '', data: res.data })
+		})
 	}
 }
 

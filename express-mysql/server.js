@@ -34,7 +34,6 @@ app.get("/", (req, res) => {
 });
 app.post('/upload', upload.single('file'), uploadController);
 
-require("./app/routes/tutorial.routes.js")(app);
 require("./app/routes/user.router.js")(app);
 require("./app/routes/team.router.js")(app);
 require("./app/routes/player.router.js")(app);
