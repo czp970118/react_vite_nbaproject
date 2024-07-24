@@ -1,6 +1,5 @@
 const sql = require('./db.js');
 const { generateInsertSql } = require('../utils');
-const axios = require('axios');
 
 class TeamModel {
 	constructor() {
@@ -82,10 +81,23 @@ class TeamModel {
 		// const userResult = 
 	}
 	favoriteTeams(params, result) {
-		const { userId } = params;
-		axios.get(`http://127.0.0.1:7001/user/getUserInfo?userId=${userId}`).then((res) => {
-			console.log('res--->', res.data);
-			result(null, { success: true, msg: '', data: res.data })
+		const { userId, pageSize = 10, pageNum = 1 } = params;
+		if (!userId) {
+			return result({ code: 400, message: 'Missing userId parameter', success: false });
+		}
+		const start = (pageNum - 1) * pageSize;
+		sql.query(`SELECT * FROM user_teams WHERE user_id = ? limit ${pageSize} OFFSET ${start}`, [userId], (err, res) => {
+			if (err) {
+				return result({
+					success: false,
+					message: err, sqlMessage
+				}, null);
+			}
+			return result({
+				success: true,
+				message: 'success',
+				data: res
+			});
 		})
 	}
 }

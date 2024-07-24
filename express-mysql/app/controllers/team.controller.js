@@ -48,7 +48,6 @@ exports.getTeamsWithoutUserId = (req, res) => {
 
 exports.favoriteTeams = (req, res) => {
 	const data = req.body;
-	console.log('data---->', data);
 	teamInstance.favoriteTeams(data, (err, result) => {
 		if (err) {
 			res.send(err)
