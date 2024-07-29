@@ -46,6 +46,17 @@ exports.getTeamsWithoutUserId = (req, res) => {
 	});
 }
 
+exports.getTeamsWithUserId = (req, res) => {
+	const params = req.query;
+	teamInstance.getTeamsWithUserId(params, (err, result) => {
+		if (err) {
+			res.send(err)
+		} else {
+			res.send(result);
+		}
+	});
+}
+
 exports.favoriteTeams = (req, res) => {
 	const data = req.body;
 	teamInstance.favoriteTeams(data, (err, result) => {

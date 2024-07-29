@@ -58,7 +58,6 @@ class TeamModel {
 			result(null, err);
 		}
 	}
-
 	createTeam(params, result) {
 		const INSERTSQL = generateInsertSql('team', params);
 		try {
@@ -78,9 +77,9 @@ class TeamModel {
 	}
 
 	getTeamsWithoutUserId(userId, result) {
-		// const userResult = 
 	}
-	favoriteTeams(params, result) {
+
+	getTeamsWithUserId(params, result) {
 		const { userId, pageSize = 10, pageNum = 1 } = params;
 		if (!userId) {
 			return result({ code: 400, message: 'Missing userId parameter', success: false });
@@ -90,15 +89,46 @@ class TeamModel {
 			if (err) {
 				return result({
 					success: false,
-					message: err, sqlMessage
+					message: err.sqlMessage
 				}, null);
 			}
-			return result({
-				success: true,
-				message: 'success',
-				data: res
-			});
+			const teamIds = res?.map((item) => item.team_id);
+			const teamIdsString = teamIds ? teamIds.join(',') : '';
+			sql.query(`SELECT count(*) totalCount from user_teams  WHERE user_id = ?`, [userId], (err, totalRes) => {
+				if (err) {
+					return result({
+						success: false,
+						message: err.sqlMessage
+					}, null);
+				}
+				sql.query(`SELECT * FROM team WHERE teamId IN (${teamIdsString})`, (err, teamRes) => {
+					if (err) {
+						result({
+							success: false,
+							message: err, sqlMessage
+						}, null);
+					}
+					return result({
+						success: true,
+						message: 'success',
+						data: {
+							list: teamRes.map((item) => {
+								return {
+									...item,
+									favor: true
+								}
+							}),
+							total: totalRes[0].totalCount
+						}
+					});
+				});
+			})
+
 		})
+	}
+
+	favoriteTeams(params, result) {
+
 	}
 }
 
