@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import { Tabs, Form, Select, Input, Button, Pagination, Spin } from "antd";
 import { TeamItem, TeamCenterKeyEnum, TabKey } from "@/types";
 import BaseStoreContext from "@/context/base-store-context";
-import { getAllTeams } from "@/request/api/team";
+import { getAllTeams, getTeamsWithUserId } from "@/request/api/team";
 import TeamList from "./team-list";
 import { PARTTITION_DATA } from "@/constan";
 import "./index.scss";
@@ -32,9 +32,11 @@ function TeamCenter() {
       if (activeKey === TeamCenterKeyEnum.MY) {
          params.userId = userId;
       }
-      console.log("params--->", params);
       setSpinning(true);
-      const res: any = await getAllTeams(params);
+      const res: any =
+         activeKey === TeamCenterKeyEnum.MY
+            ? await getTeamsWithUserId(params)
+            : await getAllTeams(params);
       const { success, data } = res;
       if (success) {
          setDataSource(data.list);

@@ -25,6 +25,15 @@ interface UserUnFavorParams {
 function getTeamsWithoutUserId(params: UserUnFavorParams) {
 	return http('get', '/api/getTeamsWithoutUserId', params)
 }
+
+/**
+ * 获取用户收藏的球队
+ * @param params 
+ * @returns 
+ */
+function getTeamsWithUserId(params) {
+	return http('get', '/api/getTeamsWithUserId', params)
+}
 interface FavoriteParams {
 	userId?: number;
 	teamId: string;
@@ -42,4 +51,4 @@ function favoriteTeams(params: FavoriteParams) {
 	return http('post', '/api/favoriteTeams', params)
 }
 
-export { getAllTeams, queryTeamDetail, createTeam, getTeamsWithoutUserId, favoriteTeams };
+export { getAllTeams, queryTeamDetail, createTeam, getTeamsWithoutUserId, favoriteTeams, getTeamsWithUserId };

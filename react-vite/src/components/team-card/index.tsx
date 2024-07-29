@@ -1,8 +1,7 @@
 import React from "react";
 import { Card } from "antd";
-import { EditOutlined, HeartOutlined } from "@ant-design/icons";
+import { EditOutlined, HeartOutlined, HeartFilled } from "@ant-design/icons";
 import { TeamItem } from "../../types";
-
 interface IProps {
    item: TeamItem;
    onEdit: (id: number) => void;
@@ -12,7 +11,7 @@ const { Meta } = Card;
 
 const TeamCard = (props: IProps) => {
    const { item, onEdit, onFavor } = props;
-
+   const FavorIcon = item.favor ? HeartFilled : HeartOutlined;
    return (
       <Card
          hoverable
@@ -27,7 +26,7 @@ const TeamCard = (props: IProps) => {
                   onEdit(item.teamId);
                }}
             />,
-            <HeartOutlined
+            <FavorIcon
                onClick={() => {
                   onFavor(item.teamId, !item.favor);
                }}
