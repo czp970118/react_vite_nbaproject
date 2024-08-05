@@ -1,5 +1,6 @@
 import axios from "axios";
 import { message } from "antd";
+import { getCookie } from "@/utils";
 
 // 设置超长时间
 axios.defaults.timeout = 5000;
@@ -11,9 +12,13 @@ axios.defaults.baseURL = 'http://localhost:8081';
  */
 axios.interceptors.request.use(
 	(config: any) => {
+		const userCookie = getCookie("userStatus");
+		const userStatus = userCookie ? JSON.parse(userCookie) : {};
+		const { token } = userStatus;
 		config.data = JSON.stringify(config.data);
 		config.headers = {
 			"Content-Type": 'application/json',
+			Authorization: token
 		}
 		return config;
 	},

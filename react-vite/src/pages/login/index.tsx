@@ -35,6 +35,7 @@ function Login() {
             JSON.stringify({
                userName: res.user.userName,
                userId: res.user.userId,
+               token: res.user.token,
                status: success,
             })
          );
