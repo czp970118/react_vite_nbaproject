@@ -3,7 +3,8 @@ const teamInstance = new Team();
 
 exports.getAllTeams = (req, res) => {
 	const params = req.query;
-	teamInstance.getAllTeams(params, (err, result) => {
+	const token = req.headers.authorization;
+	teamInstance.getAllTeams({ ...params, token }, (err, result) => {
 		if (err) {
 			res.send(err)
 		} else {

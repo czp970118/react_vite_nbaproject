@@ -1,36 +1,74 @@
 const sql = require('./db.js');
-const { generateInsertSql } = require('../utils');
+const { generateInsertSql } = require('../utils.js');
+const axios = require('axios');
 
 class TeamModel {
 	constructor() {
 	}
 
-	getAllTeams(params, result) {
-		const { pageSize = 10, pageNum = 1 } = params;
+	getUserFavorTemas = async function (token) {
+		try {
+			const res = await axios.get(`http://127.0.0.1:7001/user/getUserFavorTeams?token=${token}`);
+			return res.data;
+		} catch (error) {
+			throw new Error("Failed to get user favorite teams");
+		}
+	};
+
+	getTeamList = async function (start, pageSize) {
+		return new Promise((resolve, reject) => {
+			sql.query(`SELECT * FROM team LIMIT ${pageSize} OFFSET ${start}`, (err, results) => {
+				if (err) return reject(err);
+				resolve({
+					success: true,
+					data: results
+				});
+			});
+		});
+	}
+
+	getTotalCount = async function () {
+		return new Promise((resolve, reject) => {
+			sql.query(`SELECT COUNT(*) AS totalCount FROM team`, (err, result) => {
+				if (err) return reject(err);
+				resolve({
+					success: true,
+					total: result[0].totalCount
+				});
+			})
+		});
+	};
+
+	async getAllTeams(params, result) {
+		const { pageSize = 10, pageNum = 1, token } = params;
 		const start = (pageNum - 1) * pageSize;
 		try {
-			sql.query(`SELECT * FROM team limit ${pageSize} OFFSET ${start}`, (err, team) => {
-				sql.query("SELECT count(*) totalCount from team", (totalErr, totalRes) => {
-					if (err) {
-						result(null, err);
-						return;
-					}
-					const total = totalRes[0].totalCount;
-					result(null, {
-						code: 200,
-						message: '',
-						success: true,
-						data: {
-							list: team,
-							total
-						}
-					});
-				})
+			// 验证页码参数
+			if (isNaN(pageSize) || isNaN(pageNum) || pageSize < 1 || pageNum < 1) {
+				throw new Error("Invalid page number or page size");
+			}
+			const [listRes, totalRes, favorTeamIdsRes] = await Promise.all([
+				this.getTeamList(start, pageSize),
+				this.getTotalCount(),
+				this.getUserFavorTemas(token)
+			])
 
-			})
+			if (listRes.success && totalRes.success && favorTeamIdsRes.success) {
+				const newList = listRes.data.map((item) => {
+					return favorTeamIdsRes.teamIdList.includes(item.teamId) ? { ...item, favor: true } : { ...item, favor: false }
+				})
+				result(null, {
+					code: 200,
+					message: '',
+					success: true,
+					data: {
+						list: newList,
+						total: totalRes.total,
+					}
+				});
+			}
+
 		} catch (err) {
-			// console.error('error------->', err, err.stack, '-----', result, '--------');
-			console.log('error-->', err)
 			result(null, err);
 		}
 	}
