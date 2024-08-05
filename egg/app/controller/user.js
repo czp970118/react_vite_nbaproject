@@ -17,7 +17,7 @@ class UserController extends Controller {
 		} catch (error) {
 			ctx.body = {
 				success: false,
-				message: err.message,
+				message: error.message,
 			};
 		}
 	}
@@ -34,6 +34,13 @@ class UserController extends Controller {
 				message: err.message,
 			};
 		}
+	}
+
+	async getUserFavorTeams() {
+		const ctx = this.ctx;
+		const token = ctx.query.token;
+		const favorTeamList = await this.ctx.service.user.getUserFavorTeams(token);
+		ctx.body = favorTeamList;
 	}
 }
 

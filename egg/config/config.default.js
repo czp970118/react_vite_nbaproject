@@ -41,6 +41,10 @@ module.exports = appInfo => {
     serverUrl: 'https://hacker-news.firebaseio.com/v0',
   }
 
+  config.jwt = {
+    secret: 'nba_secret'
+  }
+
   config.cors = {
     origin: (ctx) => {
       if (ctx.header.origin === 'http://localhost:5173') {

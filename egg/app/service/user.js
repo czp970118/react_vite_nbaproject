@@ -1,4 +1,5 @@
 const { Service } = require('egg');
+const jwt = require('jsonwebtoken');
 
 class UserService extends Service {
 	async findOne(userId) {
@@ -22,9 +23,12 @@ class UserService extends Service {
 			return {
 				success: false,
 				message: '用户名或密码错误',
-				// token: null
+				token: null
 			}
 		}
+		// 假设验证通过，生成token
+		const token = jwt.sign({ userId: user.id }, this.ctx.app.config.jwt.secret, { expiresIn: '1d' });
+		console.log('token---->', token)
 		return {
 			success: true,
 			message: '登录成功',
@@ -32,7 +36,8 @@ class UserService extends Service {
 				userId: user.id,
 				userName: user.userName,
 				avatar: user.avatar,
-				role: user.role
+				role: user.role,
+				token
 			},
 		}
 	}
@@ -55,6 +60,21 @@ class UserService extends Service {
 					avatar: newUser.avatar,
 					role: newUser.role
 				}
+			}
+		}
+	}
+	async getUserFavorTeams(token) {
+		const { userId } = jwt.verify(token, this.ctx.app.config.jwt.secret);
+		const teamIdList = await this.app.mysql.select('user_teams', {
+			where: { user_id: userId },
+			columns: ['team_id']
+		});
+		if (teamIdList) {
+			return {
+				code: 200,
+				message: '获取成功',
+				success: true,
+				teamIdList: teamIdList.map(item => item.team_id)
 			}
 		}
 	}
