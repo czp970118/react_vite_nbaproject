@@ -69,7 +69,7 @@ class TeamModel {
 			}
 
 		} catch (err) {
-			result(null, err);
+			result(err, null);
 		}
 	}
 
@@ -150,7 +150,7 @@ class TeamModel {
 						success: true,
 						message: 'success',
 						data: {
-							list: teamRes.length ? teamRes.map((item) => {
+							list: (teamRes && teamRes.length) ? teamRes.map((item) => {
 								return {
 									...item,
 									favor: true

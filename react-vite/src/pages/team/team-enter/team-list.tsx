@@ -2,6 +2,7 @@ import { Empty, Typography, Button } from "antd";
 import TeamCard from "@/components/team-card";
 import { TeamItem } from "@/types";
 import { useNavigate } from "react-router-dom";
+import { PlusOutlined } from "@ant-design/icons";
 import "./index.scss";
 
 interface IProps {
@@ -11,21 +12,25 @@ interface IProps {
 }
 
 export default (props: IProps) => {
-   const { dataSource, onCreate, onFavor } = props;
+   const { dataSource, onFavor } = props;
    const navigate = useNavigate();
 
    const onEditClick = (teamId: number) => {
       navigate(`/pages/team/detail/${teamId}`);
    };
 
+   const onCreateClick = () => {
+      navigate(`/pages/team/create`);
+   };
+
    return (
       <div className="team-wrap">
          {dataSource?.length ? (
             <div className="team-card-list">
-               {/* <div className="team-card-wrap create-btn" onClick={onCreate}>
-                     <PlusOutlined style={{ fontSize: "30px", marginBottom: 12 }} />
-                     <span>创建球队</span>
-                  </div> */}
+               <div className="team-card-wrap create-btn" onClick={onCreateClick}>
+                  <PlusOutlined style={{ fontSize: "30px", marginBottom: 12 }} />
+                  <span>创建球队</span>
+               </div>
                {dataSource.map((item) => {
                   return (
                      <div className="card-wrap" key={item.teamId}>

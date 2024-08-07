@@ -21,7 +21,7 @@ function TeamCenter() {
    const [activeKey, setActiveKey] = useState<TabKey>(TeamCenterKeyEnum.ALL);
    const [dataSource, setDataSource] = useState<TeamItem[]>();
    const [current, setCurrent] = useState<number>(1);
-   const [pageSize, setPageSize] = useState<number>(12);
+   const [pageSize, setPageSize] = useState<number>(11);
    const [total, setTotal] = useState<number>();
    const [spinning, setSpinning] = useState<boolean>(false);
 
