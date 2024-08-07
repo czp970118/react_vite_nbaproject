@@ -22,4 +22,20 @@ function editUser(params: any) {
 	return http('post', `${userBaseUrl}/user/edit`, params)
 }
 
-export { login, register, getUserInfo, editUser };
+interface FavoriteParams {
+	teamId: string;
+	favor: boolean;
+}
+/**
+ * 用户收藏球队/取消收藏球队
+ * @param {FavoriteParams} params
+ *  @property {string | number} userId - 用户的唯一标识符。
+ * 	@property {string} teamId - 以逗号分隔可以批量收藏
+ * 	@property {boolean} favor - 是否收藏
+ * @returns
+ */
+function favoriteTeams(params: FavoriteParams) {
+	return http('post', `${userBaseUrl}/user/favoriteTeams`, params)
+}
+
+export { login, register, getUserInfo, editUser, favoriteTeams };

@@ -1,4 +1,5 @@
 const { Controller } = require('egg');
+const jwt = require('jsonwebtoken');
 
 class UserController extends Controller {
 	async getUserInfo() {
@@ -41,6 +42,12 @@ class UserController extends Controller {
 		const token = ctx.query.token;
 		const favorTeamList = await this.ctx.service.user.getUserFavorTeams(token);
 		ctx.body = favorTeamList;
+	}
+
+	async favoriteTeams() {
+		const ctx = this.ctx;
+		const res = await ctx.service.user.favoriteTeams();
+		ctx.body = res;
 	}
 }
 

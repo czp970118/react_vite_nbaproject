@@ -1,12 +1,18 @@
 import { useState, useEffect, useContext } from "react";
-import { Tabs, Form, Select, Input, Button, Pagination, Spin } from "antd";
+import { Tabs, Form, Select, Input, Button, Pagination, Spin, message } from "antd";
 import { TeamItem, TeamCenterKeyEnum, TabKey } from "@/types";
 import BaseStoreContext from "@/context/base-store-context";
 import { getAllTeams, getTeamsWithUserId } from "@/request/api/team";
+import { favoriteTeams } from "@/request/api/user";
 import TeamList from "./team-list";
 import { PARTTITION_DATA } from "@/constan";
 import "./index.scss";
 const FormItem = Form.Item;
+
+interface Res {
+   success: boolean;
+   message: string;
+}
 function TeamCenter() {
    const baseStore = useContext(BaseStoreContext);
    const { userInfo } = baseStore || {};
@@ -15,7 +21,7 @@ function TeamCenter() {
    const [activeKey, setActiveKey] = useState<TabKey>(TeamCenterKeyEnum.ALL);
    const [dataSource, setDataSource] = useState<TeamItem[]>();
    const [current, setCurrent] = useState<number>(1);
-   const [pageSize, setPageSize] = useState<number>(10);
+   const [pageSize, setPageSize] = useState<number>(12);
    const [total, setTotal] = useState<number>();
    const [spinning, setSpinning] = useState<boolean>(false);
 
@@ -38,6 +44,7 @@ function TeamCenter() {
             ? await getTeamsWithUserId(params)
             : await getAllTeams(params);
       const { success, data } = res;
+      await new Promise((resolve) => setTimeout(resolve, 500));
       if (success) {
          setDataSource(data.list);
          setTotal(data.total);
@@ -53,9 +60,20 @@ function TeamCenter() {
       getTeamList(currentFormValues);
    };
 
+   const onFavor = async (teamId: number, favor: boolean) => {
+      const res: Res = await favoriteTeams({ teamId: String(teamId), favor });
+      const { success } = res;
+      if (success) {
+         message.success(res?.message);
+         getTeamList();
+      } else {
+         message.error(res?.message);
+      }
+   };
+
    useEffect(() => {
       getTeamList();
-   }, [activeKey]);
+   }, [activeKey, current, pageSize]);
 
    return (
       <div className="team-center">
@@ -95,13 +113,15 @@ function TeamCenter() {
             <Tabs.TabPane key={TeamCenterKeyEnum.MY} tab="我的球队" />
          </Tabs>
          <Spin spinning={spinning}>
-            <TeamList dataSource={dataSource} />
+            <TeamList dataSource={dataSource} onFavor={onFavor} />
          </Spin>
          <Pagination
             className="team-center-pagination"
+            onChange={(page) => {
+               setCurrent(page);
+            }}
             total={total}
             current={current}
-            showSizeChanger
             showQuickJumper
          />
       </div>

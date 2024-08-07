@@ -28,7 +28,6 @@ class UserService extends Service {
 		}
 		// 假设验证通过，生成token
 		const token = jwt.sign({ userId: user.id }, this.ctx.app.config.jwt.secret, { expiresIn: '1d' });
-		console.log('token---->', token)
 		return {
 			success: true,
 			message: '登录成功',
@@ -41,7 +40,6 @@ class UserService extends Service {
 			},
 		}
 	}
-
 	async edit(params) {
 		const user = await this.app.mysql.update('user', params);
 		if (!user) {
@@ -75,6 +73,47 @@ class UserService extends Service {
 				message: '获取成功',
 				success: true,
 				teamIdList: teamIdList.map(item => item.team_id)
+			}
+		}
+	}
+
+	async favoriteTeams() {
+		const ctx = this.ctx;
+		const token = ctx.header.authorization;
+		const { userId } = jwt.verify(token, this.ctx.app.config.jwt.secret);
+		const { favor, teamId } = ctx.request.body;
+		if (favor) {
+			const res = await this.app.mysql.insert('user_teams', {
+				user_id: userId,
+				team_id: teamId,
+				created_at: new Date()
+			});
+			if (res.affectedRows === 1) {
+				return {
+					success: true,
+					message: '收藏成功'
+				}
+			} else {
+				return {
+					success: false,
+					message: res?.message
+				}
+			}
+		} else {
+			const res = await this.app.mysql.delete('user_teams', {
+				user_id: userId,
+				team_id: teamId
+			});
+			if (res.affectedRows === 1) {
+				return {
+					success: true,
+					message: '取消收藏成功'
+				}
+			} else {
+				return {
+					success: false,
+					message: res?.message
+				}
 			}
 		}
 	}
