@@ -143,19 +143,19 @@ class TeamModel {
 					if (err) {
 						result({
 							success: false,
-							message: err, sqlMessage
+							message: err.sqlMessage
 						}, null);
 					}
 					return result({
 						success: true,
 						message: 'success',
 						data: {
-							list: teamRes.map((item) => {
+							list: teamRes.length ? teamRes.map((item) => {
 								return {
 									...item,
 									favor: true
 								}
-							}),
+							}) : [],
 							total: totalRes[0].totalCount
 						}
 					});
