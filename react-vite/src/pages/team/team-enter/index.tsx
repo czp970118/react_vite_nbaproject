@@ -13,6 +13,8 @@ interface Res {
    success: boolean;
    message: string;
 }
+
+const DEFAULT_PAGE_SIZE = 11;
 function TeamCenter() {
    const baseStore = useContext(BaseStoreContext);
    const { userInfo } = baseStore || {};
@@ -21,7 +23,6 @@ function TeamCenter() {
    const [activeKey, setActiveKey] = useState<TabKey>(TeamCenterKeyEnum.ALL);
    const [dataSource, setDataSource] = useState<TeamItem[]>();
    const [current, setCurrent] = useState<number>(1);
-   const [pageSize, setPageSize] = useState<number>(11);
    const [total, setTotal] = useState<number>();
    const [spinning, setSpinning] = useState<boolean>(false);
 
@@ -30,14 +31,12 @@ function TeamCenter() {
    };
 
    const getTeamList = async (formValues?: any) => {
-      let params = {
-         pageSize,
+      const params = {
+         pageSize: DEFAULT_PAGE_SIZE,
          pageNum: current,
+         isMine: activeKey === TeamCenterKeyEnum.MY,
          ...formValues,
       };
-      if (activeKey === TeamCenterKeyEnum.MY) {
-         params.userId = userId;
-      }
       setSpinning(true);
       const res: any =
          activeKey === TeamCenterKeyEnum.MY
@@ -73,7 +72,7 @@ function TeamCenter() {
 
    useEffect(() => {
       getTeamList();
-   }, [activeKey, current, pageSize]);
+   }, [activeKey, current]);
 
    return (
       <div className="team-center">
@@ -91,8 +90,13 @@ function TeamCenter() {
                         allowClear
                      />
                   </FormItem>
-                  <FormItem label="球队名称" name="teamName">
-                     <Input placeholder="请输入球队名称" style={{ width: 200 }} />
+                  <FormItem label="球队名称" name="keywords">
+                     <Input
+                        placeholder="请输入球队名称"
+                        style={{ width: 200 }}
+                        onPressEnter={onSearch}
+                        allowClear
+                     />
                   </FormItem>
                   <FormItem>
                      <Button type="primary" className="search-btn" onClick={onSearch}>
