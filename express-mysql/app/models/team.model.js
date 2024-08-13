@@ -15,11 +15,11 @@ class TeamModel {
 		}
 	};
 
-	getTeamsWithUserId = async function (params) {
-		const { start, pageSize, partition, keywords, teamIdList = [], token, userId } = params
-		const { favorRes } = this.getUserFavorTeams({ token, userId })
+	getTeamListWithUserId = async function (params) {
+		const { start, pageSize, partition, keywords, token } = params
+		const favorRes = await this.getUserFavorTeams({ token });
+		const { teamIdList = [] } = favorRes
 		const teamIdsString = teamIdList.join(',');
-
 		let SQL = `SELECT * FROM team WHERE teamId IN (${teamIdsString}) `;
 		let values = [];
 
@@ -42,7 +42,10 @@ class TeamModel {
 				if (err) return reject(err);
 				resolve({
 					success: true,
-					data: results
+					data: {
+						list: results.length ? results.map((item) => ({ ...item, favor: true })) : [],
+						total: teamIdList.length,
+					}
 				});
 			});
 		});
@@ -97,39 +100,46 @@ class TeamModel {
 	};
 
 	async getAllTeams(params, result) {
-		const { pageSize = 10, pageNum = 1, token } = params;
+		const { pageSize = 10, pageNum = 1, token, } = params;
 		const start = (pageNum - 1) * pageSize;
+		const isMine = params.isMine === 'true';
 		try {
 			// 验证页码参数
 			if (isNaN(pageSize) || isNaN(pageNum) || pageSize < 1 || pageNum < 1) {
 				throw new Error("Invalid page number or page size");
 			};
+			if (isMine) {
+				const res = await this.getTeamListWithUserId({ ...params, start });
+				if (res.success) {
+					return result(null, {
+						code: 200,
+						message: '',
+						success: true,
+						data: res.data,
+					});
+				}
+			} else {
+				const [listRes, totalRes, favorRes] = await Promise.all([
+					this.getTeamList({ ...params, start }),
+					this.getTotalCount(),
+					this.getUserFavorTeams({ token })
+				]);
 
-			const [totalRes, favorRes] = await Promise.all([
-				this.getTotalCount(),
-				this.getUserFavorTeams({ token })
-			]);
+				if (totalRes.success && favorRes.success && listRes.success) {
+					const newList = listRes.data.map((item) => {
+						return favorRes.teamIdList.includes(item.teamId) ? { ...item, favor: true } : { ...item, favor: false }
+					})
+					result(null, {
+						code: 200,
+						message: '',
+						success: true,
+						data: {
+							list: newList,
+							total: totalRes.total,
+						}
+					});
+				}
 
-			if (totalRes.success && favorRes.success) {
-				const { teamIdList } = favorRes;
-				const queryTemaListParams = {
-					...params,
-					start,
-					teamIdList
-				};
-				const listRes = await this.getTeamList(queryTemaListParams);
-				const newList = listRes.data.map((item) => {
-					return teamIdList.includes(item.teamId) ? { ...item, favor: true } : { ...item, favor: false }
-				})
-				result(null, {
-					code: 200,
-					message: '',
-					success: true,
-					data: {
-						list: newList,
-						total: totalRes.total,
-					}
-				});
 			}
 
 		} catch (err) {
