@@ -40,8 +40,8 @@ class UserController extends Controller {
 	async getUserFavorTeams() {
 		const ctx = this.ctx;
 		const token = ctx.query.token;
-		const favorTeamList = await this.ctx.service.user.getUserFavorTeams(token);
-		ctx.body = favorTeamList;
+		const res = await this.ctx.service.user.getUserFavorTeams(token);
+		ctx.body = res;
 	}
 
 	async favoriteTeams() {

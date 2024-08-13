@@ -72,7 +72,8 @@ class UserService extends Service {
 				code: 200,
 				message: '获取成功',
 				success: true,
-				teamIdList: teamIdList.map(item => item.team_id)
+				teamIdList: teamIdList.map(item => item.team_id),
+				userId
 			}
 		}
 	}

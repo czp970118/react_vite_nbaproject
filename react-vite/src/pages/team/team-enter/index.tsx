@@ -38,10 +38,7 @@ function TeamCenter() {
          ...formValues,
       };
       setSpinning(true);
-      const res: any =
-         activeKey === TeamCenterKeyEnum.MY
-            ? await getTeamsWithUserId(params)
-            : await getAllTeams(params);
+      const res: any = await getAllTeams(params);
       const { success, data } = res;
       await new Promise((resolve) => setTimeout(resolve, 500));
       if (success) {
