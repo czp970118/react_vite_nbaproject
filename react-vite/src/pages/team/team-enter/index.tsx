@@ -1,8 +1,7 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import { Tabs, Form, Select, Input, Button, Pagination, Spin, message } from "antd";
 import { TeamItem, TeamCenterKeyEnum, TabKey } from "@/types";
-import BaseStoreContext from "@/context/base-store-context";
-import { getAllTeams, getTeamsWithUserId } from "@/request/api/team";
+import { getAllTeams } from "@/request/api/team";
 import { favoriteTeams } from "@/request/api/user";
 import TeamList from "./team-list";
 import { PARTTITION_DATA } from "@/constan";
@@ -16,9 +15,6 @@ interface Res {
 
 const DEFAULT_PAGE_SIZE = 11;
 function TeamCenter() {
-   const baseStore = useContext(BaseStoreContext);
-   const { userInfo } = baseStore || {};
-   const { id: userId } = userInfo || {};
    const [form] = Form.useForm();
    const [activeKey, setActiveKey] = useState<TabKey>(TeamCenterKeyEnum.ALL);
    const [dataSource, setDataSource] = useState<TeamItem[]>();
@@ -115,16 +111,16 @@ function TeamCenter() {
          </Tabs>
          <Spin spinning={spinning}>
             <TeamList dataSource={dataSource} onFavor={onFavor} />
+            <Pagination
+               className="team-center-pagination"
+               onChange={(page) => {
+                  setCurrent(page);
+               }}
+               total={total}
+               current={current}
+               showQuickJumper
+            />
          </Spin>
-         <Pagination
-            className="team-center-pagination"
-            onChange={(page) => {
-               setCurrent(page);
-            }}
-            total={total}
-            current={current}
-            showQuickJumper
-         />
       </div>
    );
 }

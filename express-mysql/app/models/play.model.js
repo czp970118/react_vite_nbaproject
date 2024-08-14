@@ -86,7 +86,6 @@ class PlayerModel {
 			SQL += ` ${isFirstParam ? 'WHERE' : 'AND'} ${key} = ?`;
 			isFirstParam = false;
 		});
-		console.log('SQL----->', SQL);
 		sql.query(SQL, Object.values(params), (err, rows) => {
 			console.log('err---->', err);
 			console.log('rows--->', rows);

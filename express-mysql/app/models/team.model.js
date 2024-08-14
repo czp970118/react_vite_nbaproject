@@ -22,8 +22,8 @@ class TeamModel {
 		const teamIdsString = teamIdList.join(',');
 		let SQL = `SELECT * FROM team WHERE teamId IN (${teamIdsString}) `;
 		let values = [];
-
 		if (partition || keywords) {
+			SQL += 'AND ';
 			if (partition) {
 				SQL += '`partition` = ? ';
 				values.push(partition);
@@ -50,6 +50,42 @@ class TeamModel {
 			});
 		});
 
+	}
+
+	getTeamsWithoutUserId = async function (params) {
+		const { start, pageSize, partition, keywords, token } = params
+		const favorRes = await this.getUserFavorTeams({ token });
+		const { teamIdList = [] } = favorRes
+		const teamIdsString = teamIdList.join(',');
+		let SQL = `SELECT * FROM team WHERE teamId IN (${teamIdsString}) `;
+		let values = [];
+		if (partition || keywords) {
+			SQL += 'AND ';
+			if (partition) {
+				SQL += '`partition` = ? ';
+				values.push(partition);
+			};
+			if (keywords) {
+				if (values.length > 0) {
+					SQL += 'AND ';
+				}
+				SQL += '`teamName` LIKE ? ';
+				values.push(`%${keywords}%`);
+			};
+		}
+
+		return new Promise((resolve, reject) => {
+			sql.query(`${SQL} LIMIT ? OFFSET ?`, [...values, Number(pageSize), start], (err, results) => {
+				if (err) return reject(err);
+				resolve({
+					success: true,
+					data: {
+						list: results.length ? results.map((item) => ({ ...item, favor: true })) : [],
+						total: teamIdList.length,
+					}
+				});
+			});
+		});
 	}
 
 	getTeamList = async function (params) {
@@ -186,9 +222,6 @@ class TeamModel {
 		} catch (err) {
 			result(err, null);
 		}
-	}
-
-	getTeamsWithoutUserId(userId, result) {
 	}
 
 	favoriteTeams(params, result) {
