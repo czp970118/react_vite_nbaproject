@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Upload, message, Image } from "antd";
 import { LoadingOutlined, PlusOutlined, DeleteOutlined, EyeOutlined } from "@ant-design/icons";
 
@@ -72,6 +72,8 @@ const UploadImage = (props: IProps) => {
       e.stopPropagation();
       setPreview(true);
    };
+
+   useEffect(() => setImageUrl(value), [value]);
 
    return (
       <Upload

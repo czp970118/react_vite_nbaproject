@@ -8,6 +8,7 @@ import { ParttitionEnum, ModalModeEnum } from "@/enum";
 import { useAntdTable } from "ahooks";
 import HeadFilter from "@/components/head-filter";
 import TeamChart from "@/components/team-chart";
+import TeamEditModal from "../components/team-edit-modal";
 import { PositionEnum } from "@/constan";
 
 import "./index.scss";
@@ -23,8 +24,7 @@ function TeamDetail() {
    const [createModal, setCreateModal] = useState<boolean>(false);
    const [modalMode, setModalMode] = useState<ModalMode>(ModalModeEnum.CREATE);
    const [playerModalInitValues, setPlayerModalInitValues] = useState<any>({});
-
-   console.log("playerModalInitValues--->", playerModalInitValues);
+   const [teamEditModal, setTeamEditModal] = useState<boolean>(false);
 
    const getTeamDetail = async (id: number) => {
       setLoading(true);
@@ -83,7 +83,6 @@ function TeamDetail() {
       setPlayerModalInitValues({});
       setCreateModal(true);
    };
-
    const onRemove = (id: number) => {
       Modal.confirm({
          title: "你确认要删除该球员吗?",
@@ -107,6 +106,8 @@ function TeamDetail() {
          },
       });
    };
+
+   const onEditTeam = () => setTeamEditModal(true);
 
    const columns = [
       {
@@ -221,6 +222,11 @@ function TeamDetail() {
                               </span>
                            </div>
                         </div>
+                        <div className="team-edit">
+                           <Button type="primary" onClick={onEditTeam}>
+                              编辑
+                           </Button>
+                        </div>
                      </div>
                      <div className="team-chart-wrap">
                         <TeamChart />
@@ -243,6 +249,11 @@ function TeamDetail() {
                onClose={onClose}
                onOk={onCreateOrEdit}
                mode={modalMode}
+            />
+            <TeamEditModal
+               open={teamEditModal}
+               onClose={() => setTeamEditModal(false)}
+               values={teamDetail}
             />
          </Spin>
       </div>

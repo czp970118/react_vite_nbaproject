@@ -9,16 +9,19 @@
 		flex-direction: row;
 		align-items: center;
 		background-color: #fff;
-		justify-content: space-around;
 
 		.team-detail-info {
 			display: flex;
 			align-items: center;
+			position: relative;
+			height: 100%;
+			flex: 1;
 
 			.team-logo-wrap {
 				padding: 0 24px;
 				display: flex;
 				align-items: center;
+				height: 100%;
 
 				.team-logo {
 					width: 300px;
@@ -27,6 +30,11 @@
 				}
 			}
 
+			.team-edit {
+				position: absolute;
+				right: 0;
+				bottom: 10px;
+			}
 
 			.team-info {
 				margin-left: 12px;
@@ -44,7 +52,11 @@
 			}
 		}
 
-		.team-chart-wrap {}
+		.team-chart-wrap {
+			width: 600px;
+			display: flex;
+			justify-content: center;
+		}
 	}
 
 	.team-player-table {
